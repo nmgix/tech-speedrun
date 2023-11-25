@@ -1,0 +1,17 @@
+{
+  "frontend": {
+    "react": "/languages-icons/react.svg",
+    "vue": "/languages-icons/vue.svg"
+  },
+  "backend": {
+    "node.js": "/languages-icons/node-js.svg",
+    "nest.js": "/languages-icons/nest-js.svg"
+  },
+  "devops": {
+    "docker": "/languages-icons/docker.svg"
+  },
+  "others": {
+    "typescript": "/languages-icons/ts.svg",
+    "vscode": "/languages-icons/vscode.svg"
+  }
+}
