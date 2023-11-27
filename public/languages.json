@@ -1,7 +1,11 @@
 {
   "frontend": {
     "react": "/languages-icons/react.svg",
-    "vue": "/languages-icons/vue.svg"
+    "vue": "/languages-icons/vue.svg",
+    "other": {
+      "cshtml": "YEEE",
+      "pug": "yep"
+    }
   },
   "backend": {
     "node.js": "/languages-icons/node-js.svg",

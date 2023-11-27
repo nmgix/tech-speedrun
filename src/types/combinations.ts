@@ -11,6 +11,12 @@ export enum SearchCombinations {
 
   esc = "esc",
 
-  nextChoice = "tab",
-  prevChoice = "shift+tab"
+  selectSuggest = "tab",
+  // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
+  tab = "tab",
+
+  arrowDown = "ArrowDown",
+  arrowUp = "ArrowUp",
+
+  select = "ctrl+a"
 }

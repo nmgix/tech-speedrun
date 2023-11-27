@@ -8,6 +8,7 @@ import { KeysContext, KeysState } from "./state/keysContext";
 import { LanguagesContext, LanguagesState } from "./state/langsContext";
 
 const App: React.FC = () => {
+  // const { enableScope } = useHotkeysContext();
   const [languages, setLanguages] = useState<LanguagesState>({});
   useEffect(() => {
     (async () => {
@@ -22,7 +23,15 @@ const App: React.FC = () => {
   }, []);
 
   const [activeSearch, setActiveSearch] = useState(false);
-  useHotkeys(SearchCombinations.toggleSearch, () => setActiveSearch(v => !v), { preventDefault: true, enableOnFormTags: true }, [activeSearch]);
+  useHotkeys(
+    SearchCombinations.toggleSearch,
+    () => {
+      setActiveSearch(v => !v);
+      // enableScope("search-active");
+    },
+    { preventDefault: true, enableOnFormTags: true },
+    [activeSearch]
+  );
 
   const [fieldActive] = useState<KeysState["fieldActive"]>(null);
 
