@@ -9,9 +9,10 @@ type TempFieldsNested = { [x: string]: TempFieldsNested | string };
 
 type SearchProps = {
   fieldsToMap: TempFieldsNested;
+  updateOnFileChange: (path: string | null) => void;
 };
 
-const SearchPopup: React.FC<SearchProps> = ({ fieldsToMap }) => {
+const SearchPopup: React.FC<SearchProps> = ({ fieldsToMap, updateOnFileChange }) => {
   const { updateSearch } = useContext(KeysContext);
   function closePopup() {
     updateSearch(false);
@@ -121,6 +122,14 @@ const SearchPopup: React.FC<SearchProps> = ({ fieldsToMap }) => {
   };
 
   const [predictionState, setPredictionState] = useState<PredictionState | null>(null);
+  useEffect(() => {
+    if (predictionState && predictionState.currentPredictionEqualsString === true) {
+      updateOnFileChange(input);
+    } else {
+      updateOnFileChange(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [predictionState]);
 
   const [folderPrediction, setFolderPrediction] = useState<string[] | null>(null);
   const [desiredPrediction, setDesiredPrediction] = useState<number | null>(null);

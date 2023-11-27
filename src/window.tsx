@@ -6,9 +6,26 @@ import SearchPopup from "./components/Search";
 
 import { KeysContext, KeysState } from "./state/keysContext";
 import { LanguagesContext, LanguagesState } from "./state/langsContext";
+import { FocusContext, FocusState } from "./state/focusContext";
+import { SearchContext, SearchState } from "./state/searchContext";
 
 const App: React.FC = () => {
   // const { enableScope } = useHotkeysContext();
+
+  // хук для KeysContext провайдера
+  // хоть и фигурирует слово search, но оно здесь только для ctrl+F
+  const [activeSearch, setActiveSearch] = useState<KeysState["searchActive"]>(false);
+  useHotkeys(
+    SearchCombinations.toggleSearch,
+    () => {
+      setActiveSearch(v => !v);
+      // enableScope("search-active");
+    },
+    { preventDefault: true, enableOnFormTags: true },
+    [activeSearch]
+  );
+
+  // хук для LanguagesContext провайдера
   const [languages, setLanguages] = useState<LanguagesState>({});
   useEffect(() => {
     (async () => {
@@ -22,27 +39,23 @@ const App: React.FC = () => {
     })();
   }, []);
 
-  const [activeSearch, setActiveSearch] = useState(false);
-  useHotkeys(
-    SearchCombinations.toggleSearch,
-    () => {
-      setActiveSearch(v => !v);
-      // enableScope("search-active");
-    },
-    { preventDefault: true, enableOnFormTags: true },
-    [activeSearch]
-  );
+  // хук для FocusContext провайдера
+  const [activeField, setActiveField] = useState<FocusState["field"]>(null);
 
-  const [fieldActive] = useState<KeysState["fieldActive"]>(null);
-
-  // https://stackoverflow.com/questions/53346462/react-multiple-contexts
-  // второй ответ интересный, но того не стоит
+  // хук для SearchContext провайдера
+  const [searchPath, setSearchPath] = useState<SearchState["path"]>(null);
   return (
-    <LanguagesContext.Provider value={languages}>
-      <KeysContext.Provider value={{ searchActive: activeSearch, fieldActive, updateSearch: setActiveSearch }}>
-        <main className='home-window'>{activeSearch && createPortal(<SearchPopup fieldsToMap={languages} />, document.body)}</main>
-      </KeysContext.Provider>
-    </LanguagesContext.Provider>
+    <KeysContext.Provider value={{ searchActive: activeSearch, updateSearch: setActiveSearch }}>
+      <FocusContext.Provider value={{ field: activeField, setActiveField }}>
+        <LanguagesContext.Provider value={languages}>
+          <SearchContext.Provider value={{ path: searchPath, setPath: setSearchPath }}>
+            <main className='home-window'>
+              {activeSearch && createPortal(<SearchPopup fieldsToMap={languages} updateOnFileChange={setSearchPath} />, document.body)}
+            </main>
+          </SearchContext.Provider>
+        </LanguagesContext.Provider>
+      </FocusContext.Provider>
+    </KeysContext.Provider>
   );
 };
 
