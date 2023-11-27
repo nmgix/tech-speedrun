@@ -4,17 +4,18 @@ import { SearchCombinations } from "../../types/combinations";
 import "./search.scss";
 import { useHotkeys } from "react-hotkeys-hook";
 import { KeysContext } from "../../state/keysContext";
-import { LanguagesContext } from "../../state/langsContext";
 
-const SearchPopup = () => {
-  // const { disableScope } = useHotkeysContext();
+type TempFieldsNested = { [x: string]: TempFieldsNested | string };
+
+type SearchProps = {
+  fieldsToMap: TempFieldsNested;
+};
+
+const SearchPopup: React.FC<SearchProps> = ({ fieldsToMap }) => {
   const { updateSearch } = useContext(KeysContext);
-  const closePopup = () => {
+  function closePopup() {
     updateSearch(false);
-    // disableScope("search-active");
-  };
-
-  const languages = useContext(LanguagesContext);
+  }
 
   const [input, setInput] = useState("");
 
@@ -82,7 +83,7 @@ const SearchPopup = () => {
       [input, activeCombination]
     );
 
-    if (predictionState === null || predictionState.currentPredictionEqualsString !== true) {
+    if ((predictionState === null || predictionState.currentPredictionEqualsString !== true) && activeCombination === null) {
       return <button className='search-popup__button search-popup__button--add'>~</button>;
     }
 
@@ -130,7 +131,7 @@ const SearchPopup = () => {
 
   const giveOptions = () => {
     if (predictionState === null && input.length > 0) return;
-    const obj = nestInObj(languages, !predictionState ? [] : predictionState.currentPosition);
+    const obj = nestInObj(fieldsToMap, !predictionState ? [] : predictionState.currentPosition);
     if (!obj || typeof obj === "string") return setFolderPrediction(null);
     const objKeys = Object.keys(obj);
     setFolderPrediction(objKeys);
@@ -153,7 +154,7 @@ const SearchPopup = () => {
       .filter(w => w.length > 0);
 
     const positions: number[] = [];
-    let currentObject = languages;
+    let currentObject = fieldsToMap;
 
     let result: PredictionState | null = null;
 
@@ -227,14 +228,14 @@ const SearchPopup = () => {
     desiredPrediction,
     folderPrediction,
     predictionState,
-    languages,
+    fieldsToMap,
     upActive.current
   ]);
   useHotkeys(SearchCombinations.arrowDown, () => changePrediction(true), { preventDefault: true, enableOnFormTags: true }, [
     desiredPrediction,
     folderPrediction,
     predictionState,
-    languages,
+    fieldsToMap,
     upActive.current
   ]);
   function changePrediction(up: boolean) {
@@ -257,7 +258,7 @@ const SearchPopup = () => {
     )
       return console.log("word typing active, not selection available");
 
-    const obj = nestInObj(languages, !predictionState ? [] : predictionState.currentPosition);
+    const obj = nestInObj(fieldsToMap, !predictionState ? [] : predictionState.currentPosition);
     if (!obj) return console.log("no object");
     const objKeys = Object.keys(obj);
     if (!objKeys) return console.log("no object keys");
@@ -273,7 +274,7 @@ const SearchPopup = () => {
     desiredPrediction,
     predictionState,
     folderPrediction,
-    languages
+    fieldsToMap
   ]);
   function applySuggest() {
     if (input.length === 0 && folderPrediction !== null && desiredPrediction !== null) {

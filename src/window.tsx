@@ -40,7 +40,7 @@ const App: React.FC = () => {
   return (
     <LanguagesContext.Provider value={languages}>
       <KeysContext.Provider value={{ searchActive: activeSearch, fieldActive, updateSearch: setActiveSearch }}>
-        <main className='home-window'>{activeSearch && createPortal(<SearchPopup />, document.body)}</main>
+        <main className='home-window'>{activeSearch && createPortal(<SearchPopup fieldsToMap={languages} />, document.body)}</main>
       </KeysContext.Provider>
     </LanguagesContext.Provider>
   );
