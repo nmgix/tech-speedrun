@@ -342,7 +342,7 @@ const SearchPopup: React.FC<SearchProps> = ({ fieldsToMap, updateOnFileChange })
 
       if (!matches) return;
       else {
-        const resultValue = matches.join("");
+        const resultValue = matches.join("").replace(/\/+/g, "/");
         setInput(resultValue);
         const newPrediction = makeInputPrediction(resultValue);
         setPredictionState(newPrediction);
