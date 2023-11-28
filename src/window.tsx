@@ -8,8 +8,11 @@ import { KeysContext, KeysState } from "./state/keysContext";
 import { LanguagesContext, LanguagesState } from "./state/langsContext";
 import { FocusContext, FocusState } from "./state/focusContext";
 import { SearchContext, SearchState } from "./state/searchContext";
+import useEngOnly from "./components/WrongLang/useEngOnly";
+import WrongLang from "./components/WrongLang";
 
 const App: React.FC = () => {
+  const { otherLang } = useEngOnly(1000);
   // const { enableScope } = useHotkeysContext();
 
   // хук для KeysContext провайдера
@@ -51,6 +54,7 @@ const App: React.FC = () => {
           <SearchContext.Provider value={{ path: searchPath, setPath: setSearchPath }}>
             <main className='home-window'>
               {activeSearch && createPortal(<SearchPopup fieldsToMap={languages} updateOnFileChange={setSearchPath} />, document.body)}
+              {otherLang && createPortal(<WrongLang />, document.body)}
             </main>
           </SearchContext.Provider>
         </LanguagesContext.Provider>
