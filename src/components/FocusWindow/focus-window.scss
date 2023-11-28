@@ -1,0 +1,102 @@
+.focus-window {
+  position: relative;
+  border-radius: 20px;
+  //   border: 2px solid #d8d8d8;
+
+  &::before {
+    // https://stackoverflow.com/questions/5706963/possible-to-use-border-radius-together-with-a-border-image-which-has-a-gradient
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 2px; /* control the border thickness */
+    background: #d8d8d8;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  padding: 30px;
+
+  &--active {
+    position: relative;
+
+    &::after {
+      //   @-webkit-keyframes rotating {
+      //     from {
+      //       background: linear-gradient(
+      //         0deg,
+      //         rgba(181, 235, 68, 1),
+      //         rgba(102, 217, 210, 1),
+      //         rgba(61, 188, 157, 1),
+      //         rgba(107, 54, 194, 1),
+      //         rgba(47, 153, 115, 1),
+      //         rgba(207, 40, 40, 1)
+      //       );
+      //     }
+      //     to {
+      //       background: linear-gradient(
+      //         360deg,
+      //         rgba(181, 235, 68, 1),
+      //         rgba(102, 217, 210, 1),
+      //         rgba(61, 188, 157, 1),
+      //         rgba(107, 54, 194, 1),
+      //         rgba(47, 153, 115, 1),
+      //         rgba(207, 40, 40, 1)
+      //       );
+      //     }
+      //   }
+      //   @keyframes rotating {
+      //     from {
+      //       background: linear-gradient(
+      //         0deg,
+      //         rgba(181, 235, 68, 1),
+      //         rgba(102, 217, 210, 1),
+      //         rgba(61, 188, 157, 1),
+      //         rgba(107, 54, 194, 1),
+      //         rgba(47, 153, 115, 1),
+      //         rgba(207, 40, 40, 1)
+      //       );
+      //     }
+      //     to {
+      //       background: linear-gradient(
+      //         360deg,
+      //         rgba(181, 235, 68, 1),
+      //         rgba(102, 217, 210, 1),
+      //         rgba(61, 188, 157, 1),
+      //         rgba(107, 54, 194, 1),
+      //         rgba(47, 153, 115, 1),
+      //         rgba(207, 40, 40, 1)
+      //       );
+      //     }
+      //   }
+
+      // https://stackoverflow.com/questions/5706963/possible-to-use-border-radius-together-with-a-border-image-which-has-a-gradient
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      padding: 2px; /* control the border thickness */
+      background: linear-gradient(
+        45deg,
+        rgba(181, 235, 68, 1),
+        rgba(102, 217, 210, 1),
+        rgba(61, 188, 157, 1),
+        rgba(107, 54, 194, 1),
+        rgba(47, 153, 115, 1),
+        rgba(207, 40, 40, 1)
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+
+      //   -webkit-animation: rotating 2s linear infinite;
+      //   -moz-animation: rotating 2s linear infinite;
+      //   -ms-animation: rotating 2s linear infinite;
+      //   -o-animation: rotating 2s linear infinite;
+      //   animation: rotating 2s linear infinite;
+    }
+  }
+}

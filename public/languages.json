@@ -1,21 +1,17 @@
 {
   "frontend": {
-    "react": "/languages-icons/react.svg",
-    "vue": "/languages-icons/vue.svg",
-    "other": {
-      "cshtml": "YEEE",
-      "pug": "yep"
-    }
+    "react": "react",
+    "vue": "vue"
   },
   "backend": {
-    "node.js": "/languages-icons/node-js.svg",
-    "nest.js": "/languages-icons/nest-js.svg"
+    "node.js": "node.js",
+    "nest.js": "nest.js"
   },
   "devops": {
-    "docker": "/languages-icons/docker.svg"
+    "docker": "docker"
   },
   "others": {
-    "typescript": "/languages-icons/ts.svg",
-    "vscode": "/languages-icons/vscode.svg"
+    "typescript": "typescript",
+    "vscode": "vscode"
   }
 }

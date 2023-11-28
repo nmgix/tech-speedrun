@@ -4,12 +4,15 @@
 
 body {
   position: relative;
-  margin: 0;
+  margin: 0 auto;
   padding: 30px 40px;
   overflow: hidden;
 
-  min-width: 330px;
-  @media screen and (max-width: 331px) {
+  height: 100vh;
+
+  min-width: 500px;
+  max-width: 1280px;
+  @media screen and (max-width: 500px) {
     overflow-x: scroll;
   }
 }

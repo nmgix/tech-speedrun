@@ -2,17 +2,23 @@ import { useHotkeys } from "react-hotkeys-hook";
 import { SearchCombinations } from "./types/combinations";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import SearchPopup from "./components/Search";
 
 import { KeysContext, KeysState } from "./state/keysContext";
 import { LanguagesContext, LanguagesState } from "./state/langsContext";
 import { FocusContext, FocusState } from "./state/focusContext";
 import { SearchContext, SearchState } from "./state/searchContext";
+
+import SearchPopup from "./components/Search";
 import useEngOnly from "./components/WrongLang/useEngOnly";
 import WrongLang from "./components/WrongLang";
+import LanguagesList from "./components/LanguagesList";
+import LanguagesResult from "./components/LanguagesResult";
+
+import "./window.scss";
+import "./components/LanguagesList/tech.scss";
 
 const App: React.FC = () => {
-  const { otherLang } = useEngOnly(1000);
+  const { otherLang } = useEngOnly(100000);
   // const { enableScope } = useHotkeysContext();
 
   // хук для KeysContext провайдера
@@ -29,7 +35,7 @@ const App: React.FC = () => {
   );
 
   // хук для LanguagesContext провайдера
-  const [languages, setLanguages] = useState<LanguagesState>({});
+  const [languages, setLanguages] = useState<LanguagesState>({ languagesShort: {}, languagesCharacteristicsList: {} });
   useEffect(() => {
     (async () => {
       const fetchedLanguages = await fetch("languages.json", {
@@ -38,7 +44,15 @@ const App: React.FC = () => {
           Accept: "application/json"
         }
       }).then(res => res.json());
-      setLanguages(fetchedLanguages);
+
+      const fetchedLanguagesCharacteristics = await fetch("languages-characteristics.json", {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        }
+      }).then(res => res.json());
+
+      setLanguages({ languagesShort: fetchedLanguages, languagesCharacteristicsList: fetchedLanguagesCharacteristics });
     })();
   }, []);
 
@@ -53,8 +67,12 @@ const App: React.FC = () => {
         <LanguagesContext.Provider value={languages}>
           <SearchContext.Provider value={{ path: searchPath, setPath: setSearchPath }}>
             <main className='home-window'>
-              {activeSearch && createPortal(<SearchPopup fieldsToMap={languages} updateOnFileChange={setSearchPath} />, document.body)}
+              {activeSearch &&
+                languages.languagesShort &&
+                createPortal(<SearchPopup fieldsToMap={languages.languagesShort} updateOnFileChange={setSearchPath} />, document.body)}
               {otherLang && createPortal(<WrongLang />, document.body)}
+              {languages !== null && <LanguagesList />}
+              <LanguagesResult />
             </main>
           </SearchContext.Provider>
         </LanguagesContext.Provider>

@@ -1,0 +1,40 @@
+{
+  "react": {
+    "textColor": "#149ECA",
+    "backgroundColor": "#23272F",
+    "iconLink": "/languages-icons/react.svg"
+  },
+  "vue": {
+    "textColor": "#41b883",
+    "backgroundColor": "#35495e",
+    "iconLink": "/languages-icons/vue.svg"
+  },
+  "node.js": {
+    "textColor": "#57a645",
+    "backgroundColor": "#090c15",
+    "iconLink": "/languages-icons/node-js.svg"
+  },
+  "nest.js": {
+    "textColor": "#ea2845",
+    "backgroundColor": "#f1f3f3",
+    "iconLink": "/languages-icons/nest-js.svg",
+    "borderColor": "#ea2845"
+  },
+  "docker": {
+    "textColor": "#ffffff",
+    "backgroundColor": "#2b97e9",
+    "iconLink": "/languages-icons/docker.svg"
+  },
+  "typescript": {
+    "textColor": "#3178c6",
+    "backgroundColor": "#ffffff",
+    "iconLink": "/languages-icons/ts.svg",
+    "borderColor": "#3178c6"
+  },
+  "vscode": {
+    "textColor": "#028FD6",
+    "backgroundColor": "#ffffff",
+    "iconLink": "/languages-icons/vscode.svg",
+    "borderColor": "#028FD6"
+  }
+}

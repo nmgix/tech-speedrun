@@ -1,0 +1,17 @@
+.languages-result {
+  display: flex;
+
+  &__copy {
+    width: 20px;
+    height: 23px;
+
+    background-color: transparent;
+
+    display: flex;
+
+    .icon {
+      width: 20px;
+      height: 23px;
+    }
+  }
+}

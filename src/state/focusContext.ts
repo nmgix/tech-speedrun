@@ -1,9 +1,11 @@
 import React from "react";
 
-export type FieldOptions = "languages_list" | "result_list" | "options";
+// export type FieldOptions = "languages_list" | "result_list" | "options";
+
+// field: string - path elements
 
 export interface FocusState {
-  field: FieldOptions | null;
+  field: string | null;
   setActiveField: (field: FocusState["field"]) => void;
 }
 

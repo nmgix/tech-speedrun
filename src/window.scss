@@ -1,0 +1,16 @@
+.home-window {
+  width: 100%;
+  flex: 1;
+
+  display: flex;
+  justify-content: space-between;
+  gap: 35px;
+
+  & > .focus-window {
+    flex: 1.85;
+  }
+
+  .languages-result {
+    flex: 1.15;
+  }
+}

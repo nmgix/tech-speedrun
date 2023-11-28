@@ -1,16 +1,19 @@
 import { useContext } from "react";
-import { FieldOptions, FocusContext } from "../../state/focusContext";
+import { FocusContext } from "../../state/focusContext";
+
 import classNames from "classnames";
+import "./focus-window.scss";
 
 type FocusWindowProps = {
   children: React.ReactNode;
-  fieldName: FieldOptions;
+  fieldName: string;
+  externalClassname?: string;
 };
 
-const FocusWindow: React.FC<FocusWindowProps> = ({ children, fieldName }) => {
+const FocusWindow: React.FC<FocusWindowProps> = ({ children, fieldName, externalClassname }) => {
   const { field } = useContext(FocusContext);
 
-  return <div className={classNames("focus-window", { "focus-window--active": fieldName === field })}>{children}</div>;
+  return <div className={classNames("focus-window", { "focus-window--active": fieldName === field }, externalClassname)}>{children}</div>;
 };
 
 export default FocusWindow;

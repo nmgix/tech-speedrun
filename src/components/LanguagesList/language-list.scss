@@ -1,0 +1,15 @@
+.languages {
+  &__list {
+    padding: 14px 22px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+}
