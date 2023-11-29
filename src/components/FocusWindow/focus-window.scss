@@ -4,6 +4,7 @@
   //   border: 2px solid #d8d8d8;
 
   &::before {
+    z-index: -2;
     // https://stackoverflow.com/questions/5706963/possible-to-use-border-radius-together-with-a-border-image-which-has-a-gradient
     content: "";
     position: absolute;
@@ -71,7 +72,7 @@
       //       );
       //     }
       //   }
-
+      z-index: -1;
       // https://stackoverflow.com/questions/5706963/possible-to-use-border-radius-together-with-a-border-image-which-has-a-gradient
       content: "";
       position: absolute;

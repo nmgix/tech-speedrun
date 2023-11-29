@@ -1,7 +1,29 @@
 .languages-result {
-  display: flex;
+  position: relative;
 
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  &__header {
+    flex: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  &__title {
+    font-family: "StretchSans";
+    font-size: 24px;
+    font-weight: 400;
+  }
+  &__subtitle {
+    font-size: 16px;
+    font-weight: 400;
+  }
   &__copy {
+    position: absolute;
+    top: 0;
+    right: 0;
+
     width: 20px;
     height: 23px;
 
@@ -13,5 +35,95 @@
       width: 20px;
       height: 23px;
     }
+  }
+
+  &__list {
+    flex: 1;
+  }
+}
+
+.result-list {
+  // TEMPORARY
+  min-height: 100px;
+  // TEMPORARY
+  &__element {
+    list-style-type: none;
+  }
+
+  // The reason overflow:auto changes the parent div to allow the nested margin-top is that it creates a new formatting context. Any div that's positioned absolute, fixed, floated or with overflow other than visible creates a new formatting context.
+  // 4-ый ответ https://stackoverflow.com/questions/2890354/margin-top-in-a-nested-div
+  overflow: auto;
+
+  position: relative;
+  padding-left: 30px;
+  padding-bottom: 10px; // чтобы тень снизу не пропадала
+  margin: 0;
+  &:has(.result-list__element)::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 2px;
+
+    width: 0;
+    height: 20%; //в будущем там будет добавлено сколько пикселей снизу убрать (закругление в конце)
+    border-right: 2px solid #d8d8d8;
+  }
+
+  &__category-title {
+    font-size: 14px;
+    font-weight: 700;
+  }
+  &__tech-category {
+    position: relative;
+    $margin: 30px;
+
+    &:first-child {
+      margin-top: 10px;
+    }
+    &:not(:first-child) {
+      margin-top: $margin;
+    }
+
+    &:not(:last-child)::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -28px;
+
+      width: 0;
+      height: calc(100% + $margin); //в будущем там будет добавлено сколько пикселей снизу убрать (закругление в конце)
+      border-right: 2px solid #d8d8d8;
+    }
+
+    &:last-child::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -28px;
+
+      width: 0;
+      height: 10px; //в будущем там будет добавлено сколько пикселей снизу убрать (закругление в конце)
+      border-right: 2px solid #d8d8d8;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -28px;
+      background: url(/icons/corner.svg) no-repeat 50% 50%;
+      width: 20px;
+      aspect-ratio: 1/1;
+    }
+  }
+
+  &__tech-list {
+    padding: 0;
+    margin-top: 3px;
+
+    display: flex;
+    column-gap: 10px;
+    row-gap: 5px;
+    flex-wrap: wrap;
   }
 }

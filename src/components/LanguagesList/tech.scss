@@ -37,17 +37,6 @@
   flex-wrap: nowrap;
   align-items: center;
 
-  cursor: pointer;
-  &:hover {
-    filter: brightness(0.9);
-  }
-
-  &:active {
-    filter: brightness(0.8);
-    box-shadow: none;
-    transform: translateY(2px);
-  }
-
   // уже выбран и находится в другом листе
   &--selected {
     opacity: 0.5;

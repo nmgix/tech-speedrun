@@ -3,30 +3,10 @@ import { LanguagesContext } from "../../state/langsContext";
 import FocusWindow from "../FocusWindow";
 
 import "./language-list.scss";
-import { IconTech } from "../IconTech";
-import { LanguageCharacteristic } from "../../types/languages";
+import TechBadge from "./TechBadge";
 
 const LanguagesList: React.FC = () => {
   const languages = useContext(LanguagesContext);
-
-  const TechBadge: React.FC<{ characteristic: LanguageCharacteristic | null; techTitle: string }> = ({ characteristic, techTitle }) => {
-    return (
-      <button
-        className='badge'
-        style={
-          characteristic
-            ? {
-                backgroundColor: characteristic.backgroundColor,
-                border: characteristic.borderColor ? `1px solid ${characteristic.borderColor}` : undefined,
-                color: characteristic.textColor
-              }
-            : {}
-        }>
-        <IconTech src={characteristic?.iconLink || undefined} iconColor={characteristic?.textColor} />
-        <span className='badge__title'>{techTitle}</span>
-      </button>
-    );
-  };
 
   return (
     <FocusWindow fieldName='languages_list' externalClassname='languages__list'>
@@ -38,7 +18,11 @@ const LanguagesList: React.FC = () => {
               {Object.keys(languages.languagesShort![k]).map(sk => (
                 <TechBadge
                   characteristic={languages.languagesCharacteristicsList && languages.languagesCharacteristicsList[languages.languagesShort![k][sk]]}
-                  techTitle={sk}
+                  techTitle={
+                    (languages.languagesCharacteristicsList &&
+                      languages.languagesCharacteristicsList[languages.languagesShort![k][sk]].formattedTitle) ||
+                    sk
+                  }
                   key={sk}
                 />
               ))}

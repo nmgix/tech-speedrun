@@ -16,9 +16,11 @@ import LanguagesResult from "./components/LanguagesResult";
 
 import "./window.scss";
 import "./components/LanguagesList/tech.scss";
+import { SelectablesContext } from "./state/selectablesContext";
+import { LanguagesShort } from "./types/languages";
 
 const App: React.FC = () => {
-  const { otherLang } = useEngOnly(100000);
+  const { otherLang } = useEngOnly(1000);
   // const { enableScope } = useHotkeysContext();
 
   // хук для KeysContext провайдера
@@ -61,20 +63,28 @@ const App: React.FC = () => {
 
   // хук для SearchContext провайдера
   const [searchPath, setSearchPath] = useState<SearchState["path"]>(null);
+
+  const [selectedLanguages, setSelectedLanguages] = useState<LanguagesShort>({
+    frontend: { react: "react" },
+    others: { typescript: "typescript", vscode: "vscode" }
+  });
+
   return (
     <KeysContext.Provider value={{ searchActive: activeSearch, updateSearch: setActiveSearch }}>
       <FocusContext.Provider value={{ field: activeField, setActiveField }}>
         <LanguagesContext.Provider value={languages}>
-          <SearchContext.Provider value={{ path: searchPath, setPath: setSearchPath }}>
-            <main className='home-window'>
-              {activeSearch &&
-                languages.languagesShort &&
-                createPortal(<SearchPopup fieldsToMap={languages.languagesShort} updateOnFileChange={setSearchPath} />, document.body)}
-              {otherLang && createPortal(<WrongLang />, document.body)}
-              {languages !== null && <LanguagesList />}
-              <LanguagesResult />
-            </main>
-          </SearchContext.Provider>
+          <SelectablesContext.Provider value={{ selectedLanguages, setSelectedLanguages }}>
+            <SearchContext.Provider value={{ path: searchPath, setPath: setSearchPath }}>
+              <main className='home-window'>
+                {activeSearch &&
+                  languages.languagesShort &&
+                  createPortal(<SearchPopup fieldsToMap={languages.languagesShort} updateOnFileChange={setSearchPath} />, document.body)}
+                {otherLang && createPortal(<WrongLang />, document.body)}
+                {languages.languagesShort !== null && <LanguagesList />}
+                {languages.languagesCharacteristicsList !== null && <LanguagesResult />}
+              </main>
+            </SearchContext.Provider>
+          </SelectablesContext.Provider>
         </LanguagesContext.Provider>
       </FocusContext.Provider>
     </KeysContext.Provider>

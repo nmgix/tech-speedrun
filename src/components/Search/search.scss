@@ -88,16 +88,6 @@
     text-align: center;
     vertical-align: middle;
 
-    &:hover {
-      filter: brightness(0.9);
-    }
-
-    &:active {
-      filter: brightness(0.8);
-      box-shadow: none;
-      transform: translateY(2px);
-    }
-
     &--add,
     &--remove {
       font-size: 32px;

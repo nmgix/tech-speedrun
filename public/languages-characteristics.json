@@ -1,10 +1,12 @@
 {
   "react": {
+    "formattedTitle": "React",
     "textColor": "#149ECA",
     "backgroundColor": "#23272F",
     "iconLink": "/languages-icons/react.svg"
   },
   "vue": {
+    "formattedTitle": "Vue",
     "textColor": "#41b883",
     "backgroundColor": "#35495e",
     "iconLink": "/languages-icons/vue.svg"
@@ -26,12 +28,14 @@
     "iconLink": "/languages-icons/docker.svg"
   },
   "typescript": {
+    "formattedTitle": "Typescript",
     "textColor": "#3178c6",
     "backgroundColor": "#ffffff",
     "iconLink": "/languages-icons/ts.svg",
     "borderColor": "#3178c6"
   },
   "vscode": {
+    "formattedTitle": "VScode",
     "textColor": "#028FD6",
     "backgroundColor": "#ffffff",
     "iconLink": "/languages-icons/vscode.svg",
