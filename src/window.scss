@@ -13,4 +13,10 @@
   .languages-result {
     flex: 1.15;
   }
+
+  &__right-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
 }

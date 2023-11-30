@@ -1,0 +1,15 @@
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+
+  &__title {
+    font-family: "StretchSans";
+    font-weight: 500;
+  }
+
+  &__wrapper {
+    display: flex;
+    gap: 15px;
+  }
+}

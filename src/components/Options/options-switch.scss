@@ -1,0 +1,71 @@
+.options-switch {
+  //   &__label {
+  //     display: flex;
+  //     flex-direction: column;
+  //   }
+  position: relative;
+
+  display: flex;
+  border-radius: 5px;
+  overflow: hidden;
+
+  cursor: pointer;
+
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  background-color: #a8a8a8;
+
+  &__input {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+  }
+
+  &__option {
+    padding: 7px 10px;
+    border-radius: 5px;
+
+    font-family: "StretchSans";
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  &__toggle {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 50%;
+    height: 100%;
+
+    background: transparent;
+    border-radius: 5px;
+    border: 2px solid black;
+
+    &::after,
+    &::before {
+      backdrop-filter: grayscale(1);
+      content: "";
+      background: #c4c4c47a;
+      width: 200px;
+      height: calc(100% + 4px);
+
+      position: absolute;
+      top: -2px;
+      left: -2px;
+    }
+
+    &::before {
+      transform: translateX(-100%);
+    }
+
+    &::after {
+      left: calc(100% + 2px);
+      //   left: auto;
+    }
+
+    &--active {
+      left: auto;
+      right: 0;
+    }
+  }
+}

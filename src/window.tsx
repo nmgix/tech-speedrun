@@ -18,6 +18,7 @@ import "./window.scss";
 import "./components/LanguagesList/tech.scss";
 import { SelectablesContext } from "./state/selectablesContext";
 import { LanguagesShort } from "./types/languages";
+import Options from "./components/Options";
 
 const App: React.FC = () => {
   const { otherLang } = useEngOnly(1000);
@@ -81,7 +82,10 @@ const App: React.FC = () => {
                   createPortal(<SearchPopup fieldsToMap={languages.languagesShort} updateOnFileChange={setSearchPath} />, document.body)}
                 {otherLang && createPortal(<WrongLang />, document.body)}
                 {languages.languagesShort !== null && <LanguagesList />}
-                {languages.languagesCharacteristicsList !== null && <LanguagesResult />}
+                <div className='home-window__right-bar'>
+                  {languages.languagesCharacteristicsList !== null && <LanguagesResult />}
+                  <Options />
+                </div>
               </main>
             </SearchContext.Provider>
           </SelectablesContext.Provider>

@@ -6,5 +6,7 @@ export type IconProps = {
 };
 
 export const Icon: React.FC<IconProps> = ({ src, iconColor }) => {
-  return <i className='icon' style={{ backgroundColor: iconColor, WebkitMask: `url(${src})  no-repeat 50% 50%`, WebkitMaskSize: "contain" }} />;
+  return (
+    <i className='icon' style={{ backgroundColor: iconColor, WebkitMask: `url(${src}) 50% 50% / contain no-repeat`, WebkitMaskSize: "contain" }} />
+  );
 };
