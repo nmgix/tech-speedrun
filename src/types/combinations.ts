@@ -20,3 +20,7 @@ export enum SearchCombinations {
 
   select = "ctrl+a"
 }
+
+export enum OtherCombinations {
+  copy = "ctrl+c"
+}

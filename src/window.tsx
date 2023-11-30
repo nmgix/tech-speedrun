@@ -19,6 +19,7 @@ import "./components/LanguagesList/tech.scss";
 import { SelectablesContext } from "./state/selectablesContext";
 import { LanguagesShort } from "./types/languages";
 import Options from "./components/Options";
+import { OptionsContext, OptionsState } from "./state/optionsContext";
 
 const App: React.FC = () => {
   const { otherLang } = useEngOnly(1000);
@@ -70,26 +71,31 @@ const App: React.FC = () => {
     others: { typescript: "typescript", vscode: "vscode" }
   });
 
+  const [currentLangEN, setLangEN] = useState<OptionsState["currentLangEN"]>(true);
+  const [listTypeReal, setListTypeReal] = useState<OptionsState["listTypeReal"]>(false);
+
   return (
     <KeysContext.Provider value={{ searchActive: activeSearch, updateSearch: setActiveSearch }}>
       <FocusContext.Provider value={{ field: activeField, setActiveField }}>
-        <LanguagesContext.Provider value={languages}>
-          <SelectablesContext.Provider value={{ selectedLanguages, setSelectedLanguages }}>
-            <SearchContext.Provider value={{ path: searchPath, setPath: setSearchPath }}>
-              <main className='home-window'>
-                {activeSearch &&
-                  languages.languagesShort &&
-                  createPortal(<SearchPopup fieldsToMap={languages.languagesShort} updateOnFileChange={setSearchPath} />, document.body)}
-                {otherLang && createPortal(<WrongLang />, document.body)}
-                {languages.languagesShort !== null && <LanguagesList />}
-                <div className='home-window__right-bar'>
-                  {languages.languagesCharacteristicsList !== null && <LanguagesResult />}
-                  <Options />
-                </div>
-              </main>
-            </SearchContext.Provider>
-          </SelectablesContext.Provider>
-        </LanguagesContext.Provider>
+        <OptionsContext.Provider value={{ currentLangEN, setLangEN, listTypeReal, setListTypeReal }}>
+          <LanguagesContext.Provider value={languages}>
+            <SelectablesContext.Provider value={{ selectedLanguages, setSelectedLanguages }}>
+              <SearchContext.Provider value={{ path: searchPath, setPath: setSearchPath }}>
+                <main className='home-window'>
+                  {activeSearch &&
+                    languages.languagesShort &&
+                    createPortal(<SearchPopup fieldsToMap={languages.languagesShort} updateOnFileChange={setSearchPath} />, document.body)}
+                  {otherLang && createPortal(<WrongLang />, document.body)}
+                  {languages.languagesShort !== null && <LanguagesList />}
+                  <div className='home-window__right-bar'>
+                    {languages.languagesCharacteristicsList !== null && <LanguagesResult />}
+                    <Options />
+                  </div>
+                </main>
+              </SearchContext.Provider>
+            </SelectablesContext.Provider>
+          </LanguagesContext.Provider>
+        </OptionsContext.Provider>
       </FocusContext.Provider>
     </KeysContext.Provider>
   );
