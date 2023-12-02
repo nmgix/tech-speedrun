@@ -41,6 +41,17 @@
   &--selected {
     opacity: 0.5;
     box-shadow: none;
+
+    &:hover,
+    &:active {
+      filter: none;
+    }
+    &:hover {
+      cursor: default;
+    }
+    &:active {
+      transform: none;
+    }
   }
 
   background-color: white;

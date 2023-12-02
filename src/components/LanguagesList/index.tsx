@@ -8,7 +8,7 @@ import { SelectablesContext } from "../../state/selectablesContext";
 
 const LanguagesList: React.FC = () => {
   const languages = useContext(LanguagesContext);
-  const { addLanguageToResult } = useContext(SelectablesContext);
+  const { addLanguageToResult, selectedLanguages } = useContext(SelectablesContext);
 
   return (
     <FocusWindow fieldName='languages_list' externalClassname='languages__list'>
@@ -28,6 +28,7 @@ const LanguagesList: React.FC = () => {
                   key={sk}
                   onClick={addLanguageToResult}
                   techPath={[k, sk].join("/")}
+                  selected={selectedLanguages[k] !== undefined && selectedLanguages[k][sk] !== undefined}
                 />
               ))}
             </FocusWindow>

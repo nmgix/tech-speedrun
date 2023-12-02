@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { LanguageCharacteristic } from "../../types/languages";
 import { IconTech } from "../IconTech";
 
@@ -6,13 +7,14 @@ type TechBadgeProps = {
   techTitle: string;
   onClick: (techPath: string) => void;
   techPath: string;
+  selected?: boolean;
 };
 
-const TechBadge: React.FC<TechBadgeProps> = ({ characteristic, techTitle, onClick, techPath }) => {
+const TechBadge: React.FC<TechBadgeProps> = ({ characteristic, techTitle, onClick, techPath, selected }) => {
   return (
     <button
-      className='badge'
-      onClick={() => onClick(techPath)}
+      className={classNames("badge", { "badge--selected": selected })}
+      onClick={() => (!selected ? onClick(techPath) : undefined)}
       style={
         characteristic
           ? {
