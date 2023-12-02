@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { SearchCombinations } from "../../types/combinations";
 
 import "./search.scss";
@@ -9,6 +9,7 @@ import { makeInputPrediction, nestInObj } from "./functions";
 import SearchButton from "./components/SearchButton";
 import SearchInput from "./components/SearchInput";
 import { useRandomWord, useSearchHotkeys } from "./hooks";
+import { SelectablesContext } from "../../state/selectablesContext";
 
 type SearchProps = {
   fieldsToMap: TempFieldsNested;
@@ -16,9 +17,10 @@ type SearchProps = {
 };
 
 const SearchPopup: React.FC<SearchProps> = ({ fieldsToMap, updateOnFileChange }) => {
+  const { addLanguageToResult, removeLanguageFromResult } = useContext(SelectablesContext);
   const [input, setInput] = useState("");
   // базовые кнопки, возможно потом уедут обратно сюда
-  useSearchHotkeys(input);
+  useSearchHotkeys(input, addLanguageToResult, removeLanguageFromResult);
 
   // общий стейт подсказки, какое текущее слово подсказывается, является ли оно строчкой, его местоположение в объекте fieldsToMap
   const [predictionState, setPredictionState] = useState<PredictionState | null>(null);

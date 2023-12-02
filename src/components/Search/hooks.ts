@@ -22,7 +22,7 @@ export const useClosePopup = () => {
   return closePopup;
 };
 
-export const useSearchHotkeys = (input: string) => {
+export const useSearchHotkeys = (input: string, addFunc: (langPath: string) => void, removeFunc: (langPath: string) => void) => {
   const closePopup = useClosePopup();
 
   // хэндл закрытия через ESC
@@ -35,12 +35,17 @@ export const useSearchHotkeys = (input: string) => {
   ]);
 
   // добавление через Shift+Enter
-  useHotkeys(SearchCombinations.add, () => searchFunctions.add(input, closePopup), { preventDefault: true, enableOnFormTags: ["input"] }, [input]);
-
-  // Удаление через Shift|Ctrl+Alt+Enter
-  useHotkeys(SearchCombinations.remove, () => searchFunctions.remove(input, closePopup), { preventDefault: true, enableOnFormTags: ["input"] }, [
+  useHotkeys(SearchCombinations.add, () => searchFunctions.add(input, closePopup, addFunc), { preventDefault: true, enableOnFormTags: ["input"] }, [
     input
   ]);
+
+  // Удаление через Shift|Ctrl+Alt+Enter
+  useHotkeys(
+    SearchCombinations.remove,
+    () => searchFunctions.remove(input, closePopup, removeFunc),
+    { preventDefault: true, enableOnFormTags: ["input"] },
+    [input]
+  );
 };
 
 export const useSearchButtonHotkeys = (input: string, activeCombination: ActiveCombination, setActiveCombination: (c: ActiveCombination) => void) => {

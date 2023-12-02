@@ -16,16 +16,17 @@ export const searchFunctions = {
   search: function search(input: string, closePopup: () => void) {
     if (input.length === 0) return closePopup();
     console.log(input + " search");
+    // тут фокус, он пока не имплементирован
     return closePopup();
   },
-  add: function add(input: string, closePopup: () => void) {
+  add: function add(input: string, closePopup: () => void, addFunc: (langPath: string) => void) {
     if (input.length === 0) return closePopup();
-    console.log(input + " add");
+    addFunc(input);
     return closePopup();
   },
-  remove: function remove(input: string, closePopup: () => void) {
+  remove: function remove(input: string, closePopup: () => void, removeFunc: (langPath: string) => void) {
     if (input.length === 0) return closePopup();
-    console.log(input + " remove");
+    removeFunc(input);
     return closePopup();
   }
 };
