@@ -20,6 +20,7 @@ import { SelectablesContext } from "./state/selectablesContext";
 import { LanguagesShort } from "./types/languages";
 import Options from "./components/Options";
 import { OptionsContext, OptionsState } from "./state/optionsContext";
+import { makeInputPrediction } from "./components/Search/functions";
 
 const App: React.FC = () => {
   const { otherLang } = useEngOnly(1000);
@@ -70,6 +71,54 @@ const App: React.FC = () => {
     frontend: { react: "react" },
     others: { typescript: "typescript", vscode: "vscode" }
   });
+  const addLangToResult = (langPath: string) => {
+    // add elem or focus
+    const langPathLastWord = langPath
+      .split("/")
+      .filter(w => w.length > 0)
+      .pop();
+    setSelectedLanguages(prevLangs => {
+      // console.log(langPath, prevLangs);
+      const exists = makeInputPrediction(langPath, prevLangs);
+      // console.log(exists);
+      if (exists && exists.currentPredictionWord === langPathLastWord) {
+        console.error("word in list aready");
+        return prevLangs;
+      } else {
+        // тут костыль, но мне лень логику усложнять
+        const newLangs = Object.assign({}, prevLangs);
+        if (exists) {
+          // newLangs[exists.currentPosition[0]][langPathLastWord!] = langPathLastWord;
+          return prevLangs;
+        } else {
+          const path = langPath.split("/");
+          newLangs[path[0]] = newLangs[path[0]] || {};
+          // @ts-expect-error мне лень логику усложнять
+          newLangs[path[0]][langPathLastWord!] = langPathLastWord;
+        }
+        return newLangs;
+      }
+    });
+  };
+  const removeLangFromResult = (langPath: string) => {
+    // remove elem or focus
+    const langPathLastWord = langPath
+      .split("/")
+      .filter(w => w.length > 0)
+      .pop();
+
+    setSelectedLanguages(prevLangs => {
+      const exists = makeInputPrediction(langPath, prevLangs);
+      if (!exists) return prevLangs;
+      else {
+        const newLangs = Object.assign({}, prevLangs);
+        const path = langPath.split("/");
+        delete newLangs[path[0]][langPathLastWord!];
+        if (Object.keys(newLangs[path[0]]).length === 0) delete newLangs[path[0]];
+        return newLangs;
+      }
+    });
+  };
 
   const [currentLangEN, setLangEN] = useState<OptionsState["currentLangEN"]>(true);
   const [listTypeReal, setListTypeReal] = useState<OptionsState["listTypeReal"]>(false);
@@ -79,7 +128,13 @@ const App: React.FC = () => {
       <FocusContext.Provider value={{ field: activeField, setActiveField }}>
         <OptionsContext.Provider value={{ currentLangEN, setLangEN, listTypeReal, setListTypeReal }}>
           <LanguagesContext.Provider value={languages}>
-            <SelectablesContext.Provider value={{ selectedLanguages, setSelectedLanguages }}>
+            <SelectablesContext.Provider
+              value={{
+                selectedLanguages,
+                setSelectedLanguages,
+                addLanguageToResult: addLangToResult,
+                removeLanguageFromResult: removeLangFromResult
+              }}>
               <SearchContext.Provider value={{ path: searchPath, setPath: setSearchPath }}>
                 <main className='home-window'>
                   {activeSearch &&

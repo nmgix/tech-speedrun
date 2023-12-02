@@ -14,7 +14,7 @@ import { useHotkeys } from "react-hotkeys-hook";
 
 const LanguagesResult: React.FC = () => {
   const languages = useContext(LanguagesContext);
-  const { selectedLanguages } = useContext(SelectablesContext);
+  const { selectedLanguages, removeLanguageFromResult } = useContext(SelectablesContext);
   const { currentLangEN, listTypeReal } = useContext(OptionsContext);
 
   const headerTranslates = {
@@ -54,6 +54,8 @@ const LanguagesResult: React.FC = () => {
                       (languages.languagesCharacteristicsList && languages.languagesCharacteristicsList[selectedLanguages[c][ce]]?.formattedTitle) ||
                       ce
                     }
+                    onClick={removeLanguageFromResult}
+                    techPath={[c, ce].join("/")}
                   />
                 </li>
               ))}

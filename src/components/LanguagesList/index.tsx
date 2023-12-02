@@ -4,9 +4,11 @@ import FocusWindow from "../FocusWindow";
 
 import "./language-list.scss";
 import TechBadge from "./TechBadge";
+import { SelectablesContext } from "../../state/selectablesContext";
 
 const LanguagesList: React.FC = () => {
   const languages = useContext(LanguagesContext);
+  const { addLanguageToResult } = useContext(SelectablesContext);
 
   return (
     <FocusWindow fieldName='languages_list' externalClassname='languages__list'>
@@ -24,6 +26,8 @@ const LanguagesList: React.FC = () => {
                     sk
                   }
                   key={sk}
+                  onClick={addLanguageToResult}
+                  techPath={[k, sk].join("/")}
                 />
               ))}
             </FocusWindow>

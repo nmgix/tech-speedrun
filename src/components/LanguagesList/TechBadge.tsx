@@ -1,10 +1,18 @@
 import { LanguageCharacteristic } from "../../types/languages";
 import { IconTech } from "../IconTech";
 
-const TechBadge: React.FC<{ characteristic: LanguageCharacteristic | null; techTitle: string }> = ({ characteristic, techTitle }) => {
+type TechBadgeProps = {
+  characteristic: LanguageCharacteristic | null;
+  techTitle: string;
+  onClick: (techPath: string) => void;
+  techPath: string;
+};
+
+const TechBadge: React.FC<TechBadgeProps> = ({ characteristic, techTitle, onClick, techPath }) => {
   return (
     <button
       className='badge'
+      onClick={() => onClick(techPath)}
       style={
         characteristic
           ? {

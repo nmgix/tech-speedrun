@@ -58,7 +58,7 @@ export const makeInputPrediction = (inpVal: string, fieldsToMap: TempFieldsNeste
     });
     // если элемент вовсе не найден, то подсказки нет
     if (!levelIncludesKey || includedIndex === null) {
-      console.error("word not found");
+      console.warn("word not found");
       break;
     }
     // перед завершением функции (либо выдача найденного, либо некст итерация), добавить текущий индекс в позиции
