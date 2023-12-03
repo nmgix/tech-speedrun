@@ -15,6 +15,7 @@ const TechBadge: React.FC<TechBadgeProps> = ({ characteristic, techTitle, onClic
     <button
       className={classNames("badge", { "badge--selected": selected })}
       onClick={() => (!selected ? onClick(techPath) : undefined)}
+      tabIndex={selected ? -1 : undefined}
       style={
         characteristic
           ? {

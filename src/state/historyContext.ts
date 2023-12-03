@@ -1,0 +1,3 @@
+type HistoryAction = {
+  action: string;
+};
