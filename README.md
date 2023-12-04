@@ -14,3 +14,10 @@
 ### Проблемы
 
 1. Фокус на options инпуты не работает (кривая вёрстка)
+
+## Пример работы
+
+|  |  |
+| :-: | :-: |
+| <img width="800" alt="result preview" src="./.git.content/tech-preview.png"> result preview | <img width="800" alt="figma layout" src="./.git.content/figma-layout.png"> figma layout |
+| <img width="800" alt="search preview" src="./.git.content/search-preview.png"> search preview | <img width="800" alt="figma draft" src="./.git.content/figma-draft.png"> figma-draft (alt was excluded) |
