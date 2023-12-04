@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { LanguageCharacteristic } from "../../types/languages";
 import { IconTech } from "../IconTech";
+import { formatId } from "./functions";
 
 type TechBadgeProps = {
   characteristic: LanguageCharacteristic | null;
@@ -13,7 +14,7 @@ type TechBadgeProps = {
 const TechBadge: React.FC<TechBadgeProps> = ({ characteristic, techTitle, onClick, techPath, selected }) => {
   return (
     <button
-      id={techTitle.toLowerCase()}
+      id={formatId(techTitle)}
       className={classNames("badge", { "badge--selected": selected })}
       onClick={() => (!selected ? onClick(techPath) : undefined)}
       tabIndex={selected ? -1 : undefined}

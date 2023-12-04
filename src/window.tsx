@@ -14,6 +14,7 @@ import "./components/LanguagesList/tech.scss";
 import Options from "./components/Options";
 import { useAction, useAppSelector } from "./redux/hooks";
 import { splitPath } from "./components/Search/functions";
+import { formatId } from "./components/LanguagesList/functions";
 
 const App: React.FC = () => {
   const { otherLang } = useEngOnly(1000);
@@ -55,22 +56,21 @@ const App: React.FC = () => {
     if (!resultRef.current || !listRef.current) return console.error("refs not inited");
     if (options.focus !== null && options.focus.length > 0) {
       const path = splitPath(options.focus);
-      const lastElem = path.pop();
-      if (path.length === 0) return console.error("path length equals zero");
+      let lastElem = [...path].pop();
+      if (path.length === 0 || !lastElem) return console.error("path length equals zero");
+      lastElem = formatId(lastElem);
+      const selector = `#${lastElem}`;
       // сначала поиск в result, потом в обычном
       let element: HTMLButtonElement | null = null;
-      const existsInResult = resultRef.current.querySelector(`#${lastElem}`) as HTMLButtonElement;
+      const existsInResult = resultRef.current.querySelector(selector) as HTMLButtonElement;
       if (existsInResult) {
         element = existsInResult;
       }
-      const existsInList = listRef.current.querySelector(`#${lastElem}`) as HTMLButtonElement;
+      const existsInList = listRef.current.querySelector(selector) as HTMLButtonElement;
       if (existsInList && !existsInList.classList.contains("badge--selected")) {
         element = existsInList;
       }
 
-      console.log("existsInList ", existsInList);
-      console.log("existsInResult ", existsInResult);
-      // console.log(element);
       if (element) {
         element.classList.add("badge--focused");
         const elementList = element.closest(".result-list__tech-list")! as HTMLUListElement;
@@ -85,6 +85,7 @@ const App: React.FC = () => {
           if (element) {
             element.classList.remove("badge--focused");
             element.style.position = "";
+            element.blur();
           }
           if (existsInResult) elementList.style.paddingBottom = "";
           focusBackground.classList.remove("focus-bg--active");
@@ -92,6 +93,8 @@ const App: React.FC = () => {
 
         element.focus();
         element.onblur = removeFocus;
+        element.onclick = removeFocus;
+        element.onkeydown = e => e.key === "Escape" && removeFocus();
 
         const elemFocusTimeout = setTimeout(() => {
           removeFocus();

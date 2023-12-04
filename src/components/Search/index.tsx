@@ -4,7 +4,7 @@ import { SearchCombinations } from "../../types/combinations";
 import "./search.scss";
 import { useHotkeys } from "react-hotkeys-hook";
 import { PredictionState } from "./types";
-import { makeInputPrediction, nestInObj } from "./functions";
+import { makeInputPrediction, nestInObj, splitPath } from "./functions";
 
 import SearchButton from "./components/SearchButton";
 import SearchInput from "./components/SearchInput";
@@ -73,15 +73,7 @@ const SearchPopup = () => {
       clearTimeout(timer);
     }, 100);
 
-    if (
-      predictionState &&
-      folderPrediction === null &&
-      predictionState.currentPredictionWord !==
-        input
-          .split("/")
-          .filter(w => w.length > 0)
-          .pop()
-    )
+    if (predictionState && folderPrediction === null && predictionState.currentPredictionWord !== splitPath(input).pop())
       return console.log("word typing active, not selection available");
 
     const obj = nestInObj(languages.static.short ?? {}, !predictionState ? [] : predictionState.currentPosition);
@@ -112,24 +104,10 @@ const SearchPopup = () => {
       setPredictionState(makeInputPrediction(resultPath, languages.static.short ?? {}));
     } else {
       if (predictionState === null) return console.error("predcition = null");
-      if (
-        !input.endsWith("/") &&
-        predictionState!.currentPredictionWord ===
-          input
-            .split("/")
-            .filter(w => w.length > 0)
-            .pop()
-      )
+      if (!input.endsWith("/") && predictionState!.currentPredictionWord === splitPath(input).pop())
         return console.error("input doesnt end with / but full prediction word");
 
-      if (
-        predictionState.currentPredictionWord !== null &&
-        predictionState!.currentPredictionWord !==
-          input
-            .split("/")
-            .filter(w => w.length > 0)
-            .pop()
-      ) {
+      if (predictionState.currentPredictionWord !== null && predictionState!.currentPredictionWord !== splitPath(input).pop()) {
         // если слово неполное, но уже начато, например frontend/rea(ct)
         const resultPath = predictionState.currentPredictionEqualsString
           ? [...predictionState.prevWords, predictionState.currentPredictionWord].join("/")
