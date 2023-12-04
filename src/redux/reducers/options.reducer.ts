@@ -25,7 +25,7 @@ const OptionsSlice = createSlice({
     setSwitch: (state, action: PayloadAction<{ field: keyof OptionsState["switches"]; active: boolean }>) => {
       return { ...state, switches: { ...state.switches, [action.payload.field]: action.payload.active } };
     },
-    setActiveField: (state, action: PayloadAction<OptionsState["focus"]>) => {
+    setFocusPath: (state, action: PayloadAction<OptionsState["focus"]>) => {
       return { ...state, focus: action.payload };
     },
 

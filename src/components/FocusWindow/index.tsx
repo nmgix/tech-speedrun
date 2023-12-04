@@ -6,12 +6,17 @@ type FocusWindowProps = {
   children: React.ReactNode;
   fieldName: string;
   externalClassname?: string;
+  passedRef?: React.LegacyRef<HTMLDivElement>;
 };
 
-const FocusWindow: React.FC<FocusWindowProps> = ({ children, fieldName, externalClassname }) => {
+const FocusWindow: React.FC<FocusWindowProps> = ({ children, fieldName, externalClassname, passedRef }) => {
   const { focus } = useAppSelector(state => state.options);
 
-  return <div className={classNames("focus-window", { "focus-window--active": fieldName === focus }, externalClassname)}>{children}</div>;
+  return (
+    <div ref={passedRef} className={classNames("focus-window", { "focus-window--active": fieldName === focus }, externalClassname)}>
+      {children}
+    </div>
+  );
 };
 
 export default FocusWindow;

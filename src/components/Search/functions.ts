@@ -13,9 +13,9 @@ export function nestInObj(currObj: object, pos: number[]): object | string {
 }
 
 export const searchFunctions = {
-  search: function search(input: string, closePopup: () => void) {
+  search: function search(input: string, closePopup: () => void, setFocusPath: (langPath: string) => void) {
     if (input.length === 0) return closePopup();
-    console.log(input + " search");
+    setFocusPath(input);
     // тут фокус, он пока не имплементирован
     return closePopup();
   },

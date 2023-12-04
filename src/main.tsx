@@ -12,5 +12,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
     <Header />
     <App />
+    <div className='focus-bg' />
   </Provider>
 );

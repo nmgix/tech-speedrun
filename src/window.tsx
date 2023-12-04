@@ -1,6 +1,6 @@
 import { useHotkeys } from "react-hotkeys-hook";
 import { SearchCombinations } from "./types/combinations";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
 import SearchPopup from "./components/Search";
@@ -13,12 +13,13 @@ import "./window.scss";
 import "./components/LanguagesList/tech.scss";
 import Options from "./components/Options";
 import { useAction, useAppSelector } from "./redux/hooks";
+import { splitPath } from "./components/Search/functions";
 
 const App: React.FC = () => {
   const { otherLang } = useEngOnly(1000);
   const languages = useAppSelector(state => state.languages);
   const options = useAppSelector(state => state.options);
-  const { setStaticLanguages, toggleSearch } = useAction();
+  const { setStaticLanguages, toggleSearch, setFocusPath } = useAction();
 
   // хук для KeysContext провайдера
   // хоть и фигурирует слово search, но оно здесь только для ctrl+F
@@ -47,13 +48,68 @@ const App: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const listRef = useRef<HTMLDivElement>(null);
+  const resultRef = useRef<HTMLUListElement>(null);
+
+  useEffect(() => {
+    if (!resultRef.current || !listRef.current) return console.error("refs not inited");
+    if (options.focus !== null && options.focus.length > 0) {
+      const path = splitPath(options.focus);
+      const lastElem = path.pop();
+      if (path.length === 0) return console.error("path length equals zero");
+      // сначала поиск в result, потом в обычном
+      let element: HTMLButtonElement | null = null;
+      const existsInResult = resultRef.current.querySelector(`#${lastElem}`) as HTMLButtonElement;
+      if (existsInResult) {
+        element = existsInResult;
+      }
+      const existsInList = listRef.current.querySelector(`#${lastElem}`) as HTMLButtonElement;
+      if (existsInList && !existsInList.classList.contains("badge--selected")) {
+        element = existsInList;
+      }
+
+      console.log("existsInList ", existsInList);
+      console.log("existsInResult ", existsInResult);
+      // console.log(element);
+      if (element) {
+        element.classList.add("badge--focused");
+        const elementList = element.closest(".result-list__tech-list")! as HTMLUListElement;
+        if (existsInResult) {
+          elementList.style.paddingBottom = `${element.offsetHeight}px`;
+          element.style.position = "fixed";
+        }
+        const focusBackground = document.body.querySelector(".focus-bg")!;
+        focusBackground.classList.add("focus-bg--active");
+
+        const removeFocus = () => {
+          if (element) {
+            element.classList.remove("badge--focused");
+            element.style.position = "";
+          }
+          if (existsInResult) elementList.style.paddingBottom = "";
+          focusBackground.classList.remove("focus-bg--active");
+        };
+
+        element.focus();
+        element.onblur = removeFocus;
+
+        const elemFocusTimeout = setTimeout(() => {
+          removeFocus();
+          setFocusPath(null);
+          clearTimeout(elemFocusTimeout);
+        }, 3000);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [options.focus]);
+
   return (
     <main className='home-window'>
       {options.searchActive && languages.static.short && createPortal(<SearchPopup />, document.body)}
       {otherLang && createPortal(<WrongLang />, document.body)}
-      <LanguagesList />
+      <LanguagesList passedRef={listRef} />
       <div className='home-window__right-bar'>
-        <LanguagesResult />
+        <LanguagesResult passedRef={resultRef} />
         <Options />
       </div>
     </main>

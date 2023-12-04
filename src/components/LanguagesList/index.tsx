@@ -4,12 +4,16 @@ import "./language-list.scss";
 import TechBadge from "./TechBadge";
 import { useAction, useAppSelector } from "../../redux/hooks";
 
-const LanguagesList: React.FC = () => {
+type LanguagesListProps = {
+  passedRef?: React.LegacyRef<HTMLDivElement>;
+};
+
+const LanguagesList: React.FC<LanguagesListProps> = ({ passedRef }) => {
   const languages = useAppSelector(state => state.languages);
   const { addLanguageToResult } = useAction();
 
   return (
-    <FocusWindow fieldName='languages_list' externalClassname='languages__list'>
+    <FocusWindow passedRef={passedRef} fieldName='languages_list' externalClassname='languages__list'>
       {languages.static.short !== null &&
         Object.keys(languages.static.short).map(k => (
           <div key={k} className='languages__wrapper'>

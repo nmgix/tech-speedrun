@@ -7,7 +7,11 @@ import { OtherCombinations } from "../../types/combinations";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useAction, useAppSelector } from "../../redux/hooks";
 
-const LanguagesResult: React.FC = () => {
+type LanguagesResultProps = {
+  passedRef?: React.LegacyRef<HTMLUListElement>;
+};
+
+const LanguagesResult: React.FC<LanguagesResultProps> = ({ passedRef }) => {
   const languages = useAppSelector(state => state.languages);
   const options = useAppSelector(state => state.options);
   const { removeLanguageFromResult } = useAction();
@@ -34,7 +38,7 @@ const LanguagesResult: React.FC = () => {
 
   const FancyList = () => {
     return (
-      <ul className='result-list'>
+      <ul ref={passedRef} className='result-list'>
         {Object.keys(languages.selectedLanguages).map(c => (
           <li key={c} className='result-list__element result-list__tech-category'>
             <span className='result-list__category-title'>

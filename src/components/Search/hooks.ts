@@ -22,7 +22,12 @@ export const useClosePopup = () => {
   return closePopup;
 };
 
-export const useSearchHotkeys = (input: string, addFunc: (langPath: string) => void, removeFunc: (langPath: string) => void) => {
+export const useSearchHotkeys = (
+  input: string,
+  addFunc: (langPath: string) => void,
+  removeFunc: (langPath: string) => void,
+  setFocusPath: (langPath: string) => void
+) => {
   const closePopup = useClosePopup();
 
   // хэндл закрытия через ESC
@@ -30,9 +35,12 @@ export const useSearchHotkeys = (input: string, addFunc: (langPath: string) => v
 
   // поиск через Enter
   // показать где находится (в левом или правом списке сделать фокус, поиск через global lists state, наверное)
-  useHotkeys(SearchCombinations.search, () => searchFunctions.search(input, closePopup), { preventDefault: true, enableOnFormTags: ["input"] }, [
-    input
-  ]);
+  useHotkeys(
+    SearchCombinations.search,
+    () => searchFunctions.search(input, closePopup, setFocusPath),
+    { preventDefault: true, enableOnFormTags: ["input"] },
+    [input]
+  );
 
   // добавление через Shift+Enter
   useHotkeys(SearchCombinations.add, () => searchFunctions.add(input, closePopup, addFunc), { preventDefault: true, enableOnFormTags: ["input"] }, [

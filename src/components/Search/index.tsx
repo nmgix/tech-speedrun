@@ -13,11 +13,11 @@ import { useAction, useAppSelector } from "../../redux/hooks";
 
 const SearchPopup = () => {
   const languages = useAppSelector(state => state.languages);
-  const { addLanguageToResult, removeLanguageFromResult, setPath } = useAction();
+  const { addLanguageToResult, removeLanguageFromResult, setPath, setFocusPath } = useAction();
 
   const [input, setInput] = useState("");
   // базовые кнопки, возможно потом уедут обратно сюда
-  useSearchHotkeys(input, addLanguageToResult, removeLanguageFromResult);
+  useSearchHotkeys(input, addLanguageToResult, removeLanguageFromResult, setFocusPath);
 
   // общий стейт подсказки, какое текущее слово подсказывается, является ли оно строчкой, его местоположение в объекте fieldsToMap
   const [predictionState, setPredictionState] = useState<PredictionState | null>(null);

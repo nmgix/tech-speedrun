@@ -20,3 +20,22 @@
     gap: 15px;
   }
 }
+
+.focus-bg {
+  display: none;
+  cursor: default;
+  user-select: none;
+  z-index: 7;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  backdrop-filter: blur(2px);
+
+  &--active {
+    display: block;
+  }
+}

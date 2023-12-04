@@ -13,6 +13,7 @@ type TechBadgeProps = {
 const TechBadge: React.FC<TechBadgeProps> = ({ characteristic, techTitle, onClick, techPath, selected }) => {
   return (
     <button
+      id={techTitle.toLowerCase()}
       className={classNames("badge", { "badge--selected": selected })}
       onClick={() => (!selected ? onClick(techPath) : undefined)}
       tabIndex={selected ? -1 : undefined}

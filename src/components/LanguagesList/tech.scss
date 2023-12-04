@@ -54,6 +54,10 @@
     }
   }
 
+  &--focused {
+    z-index: 8;
+  }
+
   background-color: white;
   color: black;
 

@@ -45,7 +45,7 @@ const LanguagesSlice = createSlice({
         return state;
       } else {
         // тут костыль, но мне лень логику усложнять
-        const newLangs = Object.assign({}, { ...state.selectedLanguages });
+        const newLangs = Object.assign({}, state.selectedLanguages);
         if (exists) {
           return state;
         } else {
@@ -64,7 +64,7 @@ const LanguagesSlice = createSlice({
       const exists = makeInputPrediction(action.payload, { ...state.selectedLanguages });
       if (!exists) return state;
       else {
-        const newLangs = Object.assign({}, { ...state.selectedLanguages });
+        const newLangs = Object.assign({}, state.selectedLanguages);
         const path = splitPath(action.payload);
         delete newLangs[path[0]][word!];
         if (Object.keys(newLangs[path[0]]).length === 0) delete newLangs[path[0]];
