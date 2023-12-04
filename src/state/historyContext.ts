@@ -1,3 +1,0 @@
-type HistoryAction = {
-  action: string;
-};

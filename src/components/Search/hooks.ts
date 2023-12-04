@@ -1,9 +1,9 @@
 import { useHotkeys } from "react-hotkeys-hook";
 import { SearchCombinations } from "../../types/combinations";
 import { searchFunctions } from "./functions";
-import { useContext, useRef } from "react";
-import { KeysContext } from "../../state/keysContext";
+import { useRef } from "react";
 import { ActiveCombination } from "./types";
+import { useAction } from "../../redux/hooks";
 
 export const useRandomWord = () => {
   const randomPhrase = () => {
@@ -15,9 +15,9 @@ export const useRandomWord = () => {
 };
 
 export const useClosePopup = () => {
-  const { updateSearch } = useContext(KeysContext);
+  const { setSearchState } = useAction();
   function closePopup() {
-    updateSearch(false);
+    setSearchState(false);
   }
   return closePopup;
 };

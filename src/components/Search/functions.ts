@@ -33,15 +33,19 @@ export const searchFunctions = {
 
 export const fetchFolderData = (obj: object) => Object.keys(obj);
 
+export const splitPath = (path: string) => {
+  return path
+    .split("/")
+    .map(w => w.trim().toLowerCase())
+    .filter(w => w.length > 0);
+};
+
 export const makeInputPrediction = (inpVal: string, fieldsToMap: TempFieldsNested) => {
   if (inpVal.length === 0) {
     console.error("input value equals 0");
     return null;
   }
-  const words = inpVal
-    .split("/")
-    .map(w => w.trim().toLowerCase())
-    .filter(w => w.length > 0);
+  const words = splitPath(inpVal);
 
   const positions: number[] = [];
   let currentObject = fieldsToMap;

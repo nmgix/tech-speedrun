@@ -1,26 +1,26 @@
-import { useContext } from "react";
+import { useAction, useAppSelector } from "../../redux/hooks";
 import OptionsSwitch from "./OptionsSwitch";
 
 import "./options.scss";
-import { OptionsContext } from "../../state/optionsContext";
 
 const Options: React.FC = () => {
-  const { currentLangEN, listTypeReal, setLangEN, setListTypeReal } = useContext(OptionsContext);
+  const options = useAppSelector(state => state.options);
+  const { setSwitch } = useAction();
 
   return (
     <div className='options'>
       <h3 className='options__title'>OOPTIONS</h3>
       <div className='options__wrapper'>
         <OptionsSwitch
-          active={currentLangEN}
-          onChange={e => setLangEN(e.target.checked)}
+          active={options.switches.currentLangEN}
+          onChange={e => setSwitch({ field: "currentLangEN", active: e.target.checked })}
           optionOff={{ value: "ru", backgroundColor: "#ff6767" }}
           optionOn={{ value: "en", backgroundColor: "#6792FF" }}
           label='lang'
         />
         <OptionsSwitch
-          active={listTypeReal}
-          onChange={e => setListTypeReal(e.target.checked)}
+          active={options.switches.listTypeReal}
+          onChange={e => setSwitch({ field: "listTypeReal", active: e.target.checked })}
           optionOff={{ value: "fancy", backgroundColor: "#C6FF7E" }}
           optionOn={{ value: "real", backgroundColor: "#9a7eff" }}
           label='list type'

@@ -1,21 +1,16 @@
-import { useContext } from "react";
-import { LanguagesContext } from "../../state/langsContext";
-// import FocusWindow from "../FocusWindow";
-
 import FocusWindow from "../FocusWindow";
 import { Icon } from "../Icon";
 
 import "./language-result.scss";
 import TechBadge from "../LanguagesList/TechBadge";
-import { SelectablesContext } from "../../state/selectablesContext";
-import { OptionsContext } from "../../state/optionsContext";
 import { OtherCombinations } from "../../types/combinations";
 import { useHotkeys } from "react-hotkeys-hook";
+import { useAction, useAppSelector } from "../../redux/hooks";
 
 const LanguagesResult: React.FC = () => {
-  const languages = useContext(LanguagesContext);
-  const { selectedLanguages, removeLanguageFromResult } = useContext(SelectablesContext);
-  const { currentLangEN, listTypeReal } = useContext(OptionsContext);
+  const languages = useAppSelector(state => state.languages);
+  const options = useAppSelector(state => state.options);
+  const { removeLanguageFromResult } = useAction();
 
   const headerTranslates = {
     ru: "Мой технологический стек",
@@ -40,18 +35,22 @@ const LanguagesResult: React.FC = () => {
   const FancyList = () => {
     return (
       <ul className='result-list'>
-        {Object.keys(selectedLanguages).map(c => (
+        {Object.keys(languages.selectedLanguages).map(c => (
           <li key={c} className='result-list__element result-list__tech-category'>
             <span className='result-list__category-title'>
-              {formatTitle(techCategoriesTranslates[currentLangEN ? "en" : "ru"][c as keyof typeof techCategoriesTranslates["ru" | "en"]])}:
+              {formatTitle(
+                techCategoriesTranslates[options.switches.currentLangEN ? "en" : "ru"][c as keyof typeof techCategoriesTranslates["ru" | "en"]]
+              )}
+              :
             </span>
             <ul className='result-list__tech-list'>
-              {Object.keys(selectedLanguages[c]).map(ce => (
+              {Object.keys(languages.selectedLanguages[c]).map(ce => (
                 <li key={ce} className='result-list__element result-list__tech-badge'>
                   <TechBadge
-                    characteristic={languages.languagesCharacteristicsList && languages.languagesCharacteristicsList[ce]}
+                    characteristic={languages.static.characteristicsList && languages.static.characteristicsList[ce]}
                     techTitle={
-                      (languages.languagesCharacteristicsList && languages.languagesCharacteristicsList[selectedLanguages[c][ce]]?.formattedTitle) ||
+                      (languages.static.characteristicsList &&
+                        languages.static.characteristicsList[languages.selectedLanguages[c][ce]]?.formattedTitle) ||
                       ce
                     }
                     onClick={removeLanguageFromResult}
@@ -68,17 +67,22 @@ const LanguagesResult: React.FC = () => {
   const RealList = () => {
     return (
       <ul className='result-list--real'>
-        {Object.keys(selectedLanguages).map(c => (
+        {Object.keys(languages.selectedLanguages).map(c => (
           <li key={c} className='result-list__element result-list__tech-category--real'>
             <span className='result-list__category-title'>
-              &ensp;- {formatTitle(techCategoriesTranslates[currentLangEN ? "en" : "ru"][c as keyof typeof techCategoriesTranslates["ru" | "en"]])}
+              &ensp;-{" "}
+              {formatTitle(
+                techCategoriesTranslates[options.switches.currentLangEN ? "en" : "ru"][c as keyof typeof techCategoriesTranslates["ru" | "en"]]
+              )}
               &#10;:
             </span>
             <ul className='result-list__tech-list--real'>
-              {Object.keys(selectedLanguages[c]).map(ce => (
+              {Object.keys(languages.selectedLanguages[c]).map(ce => (
                 <li key={ce} className='result-list__element'>
                   &ensp;&ensp;&ensp;-{" "}
-                  {(languages.languagesCharacteristicsList && languages.languagesCharacteristicsList[selectedLanguages[c][ce]]?.formattedTitle) || ce}
+                  {(languages.static.characteristicsList &&
+                    languages.static.characteristicsList[languages.selectedLanguages[c][ce]]?.formattedTitle) ||
+                    ce}
                 </li>
               ))}
             </ul>
@@ -90,14 +94,18 @@ const LanguagesResult: React.FC = () => {
 
   const formattedList = () => {
     const text: string[] = [];
-    Object.keys(selectedLanguages).forEach(category => {
+    Object.keys(languages.selectedLanguages).forEach(category => {
       text.push(
-        ` - ${formatTitle(techCategoriesTranslates[currentLangEN ? "en" : "ru"][category as keyof typeof techCategoriesTranslates["ru" | "en"]])}:`
+        ` - ${formatTitle(
+          techCategoriesTranslates[options.switches.currentLangEN ? "en" : "ru"][category as keyof typeof techCategoriesTranslates["ru" | "en"]]
+        )}:`
       );
-      Object.keys(selectedLanguages[category]).map(ce => {
+      Object.keys(languages.selectedLanguages[category]).map(ce => {
         text.push(
           `   - ${
-            (languages.languagesCharacteristicsList && languages.languagesCharacteristicsList[selectedLanguages[category][ce]]?.formattedTitle) || ce
+            (languages.static.characteristicsList &&
+              languages.static.characteristicsList[languages.selectedLanguages[category][ce]]?.formattedTitle) ||
+            ce
           }`
         );
       });
@@ -106,12 +114,16 @@ const LanguagesResult: React.FC = () => {
   };
 
   const copyText = () => {
-    const text = `${headerTranslates[currentLangEN ? "en" : "ru"]}: \n` + formattedList();
+    const text = `${headerTranslates[options.switches.currentLangEN ? "en" : "ru"]}: \n` + formattedList();
     navigator.clipboard.writeText(text);
     console.log("text copied");
   };
 
-  useHotkeys(OtherCombinations.copy, copyText, { preventDefault: true }, [currentLangEN, selectedLanguages, languages.languagesCharacteristicsList]);
+  useHotkeys(OtherCombinations.copy, copyText, { preventDefault: true }, [
+    options.switches.currentLangEN,
+    languages.selectedLanguages,
+    languages.static.characteristicsList
+  ]);
 
   return (
     <div className='languages-result'>
@@ -123,8 +135,8 @@ const LanguagesResult: React.FC = () => {
         </button>
       </div>
       <FocusWindow fieldName='result_list' externalClassname='languages-result__list'>
-        <span>{headerTranslates[currentLangEN ? "en" : "ru"]}:</span>
-        {!listTypeReal ? <FancyList /> : <RealList />}
+        <span>{headerTranslates[options.switches.currentLangEN ? "en" : "ru"]}:</span>
+        {!options.switches.listTypeReal ? <FancyList /> : <RealList />}
       </FocusWindow>
     </div>
   );
