@@ -41,6 +41,7 @@
   &--selected {
     opacity: 0.5;
     box-shadow: none;
+    cursor: default;
 
     &:hover,
     &:active {

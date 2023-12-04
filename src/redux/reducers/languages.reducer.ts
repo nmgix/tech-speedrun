@@ -12,7 +12,7 @@ export type LanguagesState = {
 
 export const initialState: LanguagesState = {
   selectedLanguages: {
-    frontend: { react: "react" },
+    frontend: { react: "react", redux: "redux" },
     others: { typescript: "typescript", vscode: "vscode" }
   },
   static: {
@@ -46,14 +46,14 @@ const LanguagesSlice = createSlice({
       } else {
         // тут костыль, но мне лень логику усложнять
         const newLangs = Object.assign({}, state.selectedLanguages);
-        if (exists) {
-          return state;
-        } else {
-          const path = splitPath(action.payload);
-          newLangs[path[0]] = newLangs[path[0]] || {};
-          // @ts-expect-error мне лень логику усложнять
-          newLangs[path[0]][word!] = word;
-        }
+        // if (exists) {
+        //   return state;
+        // } else {
+        const path = splitPath(action.payload);
+        newLangs[path[0]] = newLangs[path[0]] || {};
+        // @ts-expect-error мне лень логику усложнять
+        newLangs[path[0]][word!] = word;
+        // }
         // return { ...state, selectedLanguages: newLangs }; //immer меня задолбал
         state.selectedLanguages = newLangs;
         return state;

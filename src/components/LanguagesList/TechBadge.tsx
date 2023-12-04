@@ -2,6 +2,7 @@ import classNames from "classnames";
 import { LanguageCharacteristic } from "../../types/languages";
 import { IconTech } from "../IconTech";
 import { formatId } from "./functions";
+import { splitPath } from "../Search/functions";
 
 type TechBadgeProps = {
   characteristic: LanguageCharacteristic | null;
@@ -14,7 +15,7 @@ type TechBadgeProps = {
 const TechBadge: React.FC<TechBadgeProps> = ({ characteristic, techTitle, onClick, techPath, selected }) => {
   return (
     <button
-      id={formatId(techTitle)}
+      id={formatId(splitPath(techPath).pop()!)}
       className={classNames("badge", { "badge--selected": selected })}
       onClick={() => (!selected ? onClick(techPath) : undefined)}
       tabIndex={selected ? -1 : undefined}
@@ -22,7 +23,7 @@ const TechBadge: React.FC<TechBadgeProps> = ({ characteristic, techTitle, onClic
         characteristic
           ? {
               backgroundColor: characteristic.backgroundColor,
-              border: characteristic.borderColor ? `1px solid ${characteristic.borderColor}` : undefined,
+              border: `1px solid ${characteristic.borderColor ? characteristic.borderColor : characteristic.backgroundColor}`,
               color: characteristic.textColor
             }
           : {}

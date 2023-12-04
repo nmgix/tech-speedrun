@@ -76,16 +76,21 @@ const App: React.FC = () => {
         const elementList = element.closest(".result-list__tech-list")! as HTMLUListElement;
         if (existsInResult) {
           elementList.style.paddingBottom = `${element.offsetHeight}px`;
-          element.style.position = "fixed";
+          element.style.position = "relative";
         }
         const focusBackground = document.body.querySelector(".focus-bg")!;
         focusBackground.classList.add("focus-bg--active");
+
+        const closeFocus = (e: KeyboardEvent) => {
+          e.key === "Escape" && removeFocus();
+        };
 
         const removeFocus = () => {
           if (element) {
             element.classList.remove("badge--focused");
             element.style.position = "";
             element.blur();
+            element.removeEventListener("keydown", closeFocus);
           }
           if (existsInResult) elementList.style.paddingBottom = "";
           focusBackground.classList.remove("focus-bg--active");
@@ -94,14 +99,14 @@ const App: React.FC = () => {
         element.focus();
         element.onblur = removeFocus;
         element.onclick = removeFocus;
-        element.onkeydown = e => e.key === "Escape" && removeFocus();
+        element.addEventListener("keydown", closeFocus);
 
         const elemFocusTimeout = setTimeout(() => {
           removeFocus();
           setFocusPath(null);
           clearTimeout(elemFocusTimeout);
         }, 3000);
-      }
+      } else return console.error("element for focus not found");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [options.focus]);

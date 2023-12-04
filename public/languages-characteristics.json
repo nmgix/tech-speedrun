@@ -5,16 +5,64 @@
     "backgroundColor": "#23272F",
     "iconLink": "/languages-icons/react.svg"
   },
+  "redux": {
+    "formattedTitle": "Redux",
+    "textColor": "#764abc",
+    "backgroundColor": "#FFF",
+    "iconLink": "/languages-icons/redux.svg",
+    "borderColor": "#764abc"
+  },
+  "redux-toolkit": {
+    "formattedTitle": "Redux-Toolkit",
+    "textColor": "#2e2e2e",
+    "backgroundColor": "#FFF",
+    "iconLink": "/languages-icons/redux.svg",
+    "borderColor": "#2e2e2e"
+  },
+  "rtk-query": {
+    "formattedTitle": "Rtk-query",
+    "textColor": "#2e2e2e",
+    "backgroundColor": "#FFF",
+    "iconLink": "/languages-icons/redux.svg",
+    "borderColor": "#2e2e2e"
+  },
+  "next.js": {
+    "formattedTitle": "Next.js",
+    "textColor": "#FFF",
+    "backgroundColor": "#000",
+    "iconLink": "/languages-icons/next-js.svg"
+  },
+  "mobx": {
+    "formattedTitle": "MobX",
+    "textColor": "#dd5c15",
+    "backgroundColor": "#FFF",
+    "iconLink": "/languages-icons/mobx.svg",
+    "borderColor": "#dd5c15"
+  },
   "vue": {
     "formattedTitle": "Vue",
     "textColor": "#41b883",
     "backgroundColor": "#35495e",
     "iconLink": "/languages-icons/vue.svg"
   },
+  "storybook": {
+    "formattedTitle": "Storybook",
+    "textColor": "#ff4785",
+    "backgroundColor": "#FFF",
+    "iconLink": "/languages-icons/storybook.svg",
+    "borderColor": "#ff4785"
+  },
+
   "node.js": {
     "textColor": "#57a645",
     "backgroundColor": "#090c15",
     "iconLink": "/languages-icons/node-js.svg"
+  },
+  "express.js": {
+    "textColor": "#010101",
+    "backgroundColor": "#FFF",
+    "iconLink": "/languages-icons/express-js.svg",
+    "borderColor": "#010101"
   },
   "nest.js": {
     "textColor": "#ea2845",
@@ -22,11 +70,20 @@
     "iconLink": "/languages-icons/nest-js.svg",
     "borderColor": "#ea2845"
   },
+
   "docker": {
     "textColor": "#ffffff",
     "backgroundColor": "#2b97e9",
     "iconLink": "/languages-icons/docker.svg"
   },
+  "git-actions": {
+    "formattedTitle": "Git Actions",
+    "textColor": "#22272e",
+    "backgroundColor": "#f5f7f9",
+    "iconLink": "/languages-icons/github.svg",
+    "borderColor": "#22272e"
+  },
+
   "typescript": {
     "formattedTitle": "Typescript",
     "textColor": "#3178c6",
@@ -40,5 +97,12 @@
     "backgroundColor": "#ffffff",
     "iconLink": "/languages-icons/vscode.svg",
     "borderColor": "#028FD6"
+  },
+  "jest": {
+    "formattedTitle": "Jest",
+    "textColor": "#99425b",
+    "backgroundColor": "#27272a",
+    "iconLink": "/languages-icons/jest.svg",
+    "borderColor": "#99425b"
   }
 }

@@ -1,17 +1,26 @@
 {
   "frontend": {
     "react": "react",
-    "vue": "vue"
+    "redux": "redux",
+    "redux-toolkit": "redux-toolkit",
+    "rtk-query": "rtk-query",
+    "next.js": "next.js",
+    "mobx": "mobx",
+    "vue": "vue",
+    "storybook": "storybook"
   },
   "backend": {
     "node.js": "node.js",
+    "express.js": "express.js",
     "nest.js": "nest.js"
   },
   "devops": {
-    "docker": "docker"
+    "docker": "docker",
+    "git-actions": "git-actions"
   },
   "others": {
     "typescript": "typescript",
-    "vscode": "vscode"
+    "vscode": "vscode",
+    "jest": "jest"
   }
 }
