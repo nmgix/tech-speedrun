@@ -3,24 +3,38 @@
     "react": "react",
     "redux": "redux",
     "redux-toolkit": "redux-toolkit",
+    "redux-saga": "redux-saga",
     "rtk-query": "rtk-query",
     "next.js": "next.js",
     "mobx": "mobx",
     "vue": "vue",
-    "storybook": "storybook"
+    "scss": "scss",
+    "css-modules": "css-modules",
+    "storybook": "storybook",
+    "styled-components": "styled-components",
+    "cypress": "cypress"
   },
   "backend": {
     "node.js": "node.js",
     "express.js": "express.js",
-    "nest.js": "nest.js"
+    "nest.js": "nest.js",
+    "supertest": "supertest",
+    "postgresql": "postgresql",
+    "mysql": "mysql",
+    "mongodb": "mongodb",
+    "websockets": "websockets"
   },
   "devops": {
     "docker": "docker",
     "git-actions": "git-actions"
   },
   "others": {
+    "javascript": "javascript",
     "typescript": "typescript",
     "vscode": "vscode",
-    "jest": "jest"
+    "jest": "jest",
+    "webpack": "webpack",
+    "linux": "linux",
+    "git": "git"
   }
 }

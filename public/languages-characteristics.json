@@ -13,18 +13,25 @@
     "borderColor": "#764abc"
   },
   "redux-toolkit": {
-    "formattedTitle": "Redux-Toolkit",
+    "formattedTitle": "Redux Toolkit",
     "textColor": "#2e2e2e",
     "backgroundColor": "#FFF",
     "iconLink": "/languages-icons/redux.svg",
-    "borderColor": "#2e2e2e"
+    "borderColor": "#764abc"
+  },
+  "redux-saga": {
+    "formattedTitle": "Redux Saga",
+    "textColor": "#2e2e2e",
+    "backgroundColor": "#FFF",
+    "iconLink": "/languages-icons/redux.svg",
+    "borderColor": "#764abc"
   },
   "rtk-query": {
-    "formattedTitle": "Rtk-query",
+    "formattedTitle": "RTK Query",
     "textColor": "#2e2e2e",
     "backgroundColor": "#FFF",
     "iconLink": "/languages-icons/redux.svg",
-    "borderColor": "#2e2e2e"
+    "borderColor": "#764abc"
   },
   "next.js": {
     "formattedTitle": "Next.js",
@@ -45,12 +52,35 @@
     "backgroundColor": "#35495e",
     "iconLink": "/languages-icons/vue.svg"
   },
+  "scss": {
+    "formattedTitle": "SCSS",
+    "textColor": "#FFF",
+    "backgroundColor": "#cc6699",
+    "iconLink": "/languages-icons/scss.svg"
+  },
+  "css-modules": {
+    "formattedTitle": "CSS-Modules"
+  },
   "storybook": {
     "formattedTitle": "Storybook",
     "textColor": "#ff4785",
     "backgroundColor": "#FFF",
     "iconLink": "/languages-icons/storybook.svg",
     "borderColor": "#ff4785"
+  },
+  "styled-components": {
+    "formattedTitle": "Styled Components",
+    "textColor": "#db8080",
+    "backgroundColor": "#FFF",
+    "iconLink": "/languages-icons/styled-components.svg",
+    "borderColor": "#db8080"
+  },
+  "cypress": {
+    "formattedTitle": "Cypress",
+    "textColor": "#000",
+    "backgroundColor": "#FFF",
+    "iconLink": "/languages-icons/cypress.svg",
+    "borderColor": "#000"
   },
 
   "node.js": {
@@ -70,6 +100,37 @@
     "iconLink": "/languages-icons/nest-js.svg",
     "borderColor": "#ea2845"
   },
+  "supertest": {
+    "formattedTitle": "Supertest",
+    "textColor": "#FFF",
+    "backgroundColor": "red"
+  },
+  "postgresql": {
+    "formattedTitle": "PostgreSQL",
+    "textColor": "#336791",
+    "backgroundColor": "#FFF",
+    "iconLink": "/languages-icons/postgresql.svg",
+    "borderColor": "#336791"
+  },
+  "mysql": {
+    "formattedTitle": "MySQL",
+    "textColor": "#FFF",
+    "backgroundColor": "#00758f",
+    "iconLink": "/languages-icons/mysql.svg"
+  },
+  "mongodb": {
+    "formattedTitle": "MongoDB",
+    "textColor": "#13aa52",
+    "backgroundColor": "#FFF",
+    "iconLink": "/languages-icons/mongo.svg",
+    "borderColor": "#000"
+  },
+  "websockets": {
+    "formattedTitle": "websockets",
+    "textColor": "#fe5d01",
+    "backgroundColor": "#FFF",
+    "iconLink": "/languages-icons/websockets.svg"
+  },
 
   "docker": {
     "textColor": "#ffffff",
@@ -84,11 +145,17 @@
     "borderColor": "#22272e"
   },
 
+  "javascript": {
+    "formattedTitle": "Javascript",
+    "textColor": "#f7df1e",
+    "backgroundColor": "#000000",
+    "iconLink": "/languages-icons/javascript.svg"
+  },
   "typescript": {
     "formattedTitle": "Typescript",
     "textColor": "#3178c6",
     "backgroundColor": "#ffffff",
-    "iconLink": "/languages-icons/ts.svg",
+    "iconLink": "/languages-icons/typescript.svg",
     "borderColor": "#3178c6"
   },
   "vscode": {
@@ -104,5 +171,25 @@
     "backgroundColor": "#27272a",
     "iconLink": "/languages-icons/jest.svg",
     "borderColor": "#99425b"
+  },
+  "webpack": {
+    "formattedTitle": "Webpack",
+    "textColor": "#1c78c0",
+    "backgroundColor": "#FFF",
+    "iconLink": "/languages-icons/webpack.svg",
+    "borderColor": "#8ed6fb"
+  },
+  "linux": {
+    "formattedTitle": "Linux",
+    "textColor": "#010101",
+    "backgroundColor": "#FFF",
+    "iconLink": "/languages-icons/linux.svg",
+    "borderColor": "#ff8d0f"
+  },
+  "git": {
+    "textColor": "#372301",
+    "backgroundColor": "#FFF",
+    "iconLink": "/languages-icons/git.svg",
+    "borderColor": "#f15135"
   }
 }

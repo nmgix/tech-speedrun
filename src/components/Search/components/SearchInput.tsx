@@ -23,7 +23,7 @@ const SearchInput: React.FC<SearchInputProps> = props => {
   const onInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
 
-    const regexp = new RegExp(/^[a-zA-Z0-9/\\.\s]*$/);
+    const regexp = new RegExp(/^[a-zA-Z0-9/\\.\s-]*$/);
     const matches = inputValue.match(regexp);
 
     if (!matches) return;
