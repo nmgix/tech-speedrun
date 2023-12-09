@@ -23,7 +23,6 @@ const OptionsSwitch: React.FC<OptionsSwitchProps> =
     const onRef = useRef<HTMLDivElement>(null);
 
     const setWidth = useCallback(() => {
-      console.log(offRef, onRef);
       if (active) {
         if (onRef.current) {
           return onRef.current.clientWidth + 1;

@@ -24,12 +24,10 @@ const FocusWindow: React.FC<FocusWindowProps> = memo(
   (prev, next) => {
     if (Array.isArray(prev.compareProp) && Array.isArray(next.compareProp)) {
       if (prev.compareProp.length === 0 && next.compareProp.length === 0) {
-        // console.log({ fieldName: prev.fieldName, prev: prev.compareProp, next: next.compareProp, result: true });
         return true;
       }
       const sameArrayProps =
         (prev.compareProp as string[]).map((p, index) => (next.compareProp as string[])[index] === p).filter(v => v === false).length === 0;
-      // console.log({ fieldName: prev.fieldName, prev: prev.compareProp, next: next.compareProp, result: sameArrayProps });
       return sameArrayProps;
     } else if (
       (!Array.isArray(prev.compareProp) && Array.isArray(next.compareProp)) ||
@@ -37,7 +35,6 @@ const FocusWindow: React.FC<FocusWindowProps> = memo(
     ) {
       throw new Error("prev prop is array, next is other type or vica-versa");
     }
-    // console.log({ fieldName: prev.fieldName, prev: prev.compareProp, next: next.compareProp, result: prev.compareProp === next.compareProp });
     return prev.compareProp === next.compareProp;
   }
 );

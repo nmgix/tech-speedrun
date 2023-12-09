@@ -54,7 +54,6 @@ const FancyList: React.FC<LanguagesResultProps> = memo(
     );
   },
   (prev, next) => {
-    // console.log({ prev, next, result: prev.passedRef === next.passedRef });
     return prev.passedRef === next.passedRef;
   }
 );

@@ -36,8 +36,6 @@ const TechBadge: React.FC<TechBadgeProps> = memo(
     );
   },
   (prev, next) => {
-    // console.log(prev, next, prev.selected === next.selected);
-    // console.log({ prev, next, same: JSON.stringify(prev.selected) === JSON.stringify(next.selected) });
     return JSON.stringify(prev.selected) === JSON.stringify(next.selected);
   }
 );
