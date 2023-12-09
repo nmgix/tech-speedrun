@@ -1,8 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { LanguagesCharacteristicsList, LanguagesShort } from "../../types/languages";
 import { makeInputPrediction, splitPath } from "../../components/Search/functions";
+import { v4 as uuidv4 } from "uuid";
 
 export type LanguagesState = {
+  selectId: string;
+  // lastUpdated: string | null;
   selectedLanguages: LanguagesShort;
   static: {
     short: LanguagesShort | null;
@@ -11,6 +14,8 @@ export type LanguagesState = {
 };
 
 export const initialState: LanguagesState = {
+  selectId: uuidv4(),
+  // lastUpdated: null,
   selectedLanguages: {
     frontend: { react: "react", redux: "redux" },
     others: { typescript: "typescript", vscode: "vscode" }
@@ -35,7 +40,7 @@ const LanguagesSlice = createSlice({
       return { ...state, static: action.payload };
     },
     setSelectedLanguages: (state, action: PayloadAction<LanguagesShort>) => {
-      return { ...state, selectedLanguages: action.payload };
+      return { ...state, selectedLanguages: action.payload, selectId: uuidv4() /*, lastUpdated: null*/ };
     },
     addLanguageToResult: (state, action: PayloadAction<string>) => {
       const word = splitPath(action.payload).pop();
@@ -56,6 +61,8 @@ const LanguagesSlice = createSlice({
         // }
         // return { ...state, selectedLanguages: newLangs }; //immer меня задолбал
         state.selectedLanguages = newLangs;
+        state.selectId = uuidv4();
+        // state.lastUpdated = action.payload;
         return state;
       }
     },
@@ -70,6 +77,8 @@ const LanguagesSlice = createSlice({
         if (Object.keys(newLangs[path[0]]).length === 0) delete newLangs[path[0]];
         // return { ...state, selectedLanguages: newLangs }; //immer меня задолбал
         state.selectedLanguages = newLangs;
+        state.selectId = uuidv4();
+        // state.lastUpdated = action.payload;
         return state;
       }
     },

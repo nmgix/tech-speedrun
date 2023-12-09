@@ -6,44 +6,29 @@ import TechBadge from "../LanguagesList/TechBadge";
 import { OtherCombinations } from "../../types/combinations";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useAction, useAppSelector } from "../../redux/hooks";
+import { memo, useMemo } from "react";
+import { formatTitle } from "./functions";
+import { resultListHeaderTranslates, resultListTechCategoriesTranslates } from "../../types/translates";
 
 type LanguagesResultProps = {
   passedRef?: React.LegacyRef<HTMLUListElement>;
 };
 
-const LanguagesResult: React.FC<LanguagesResultProps> = ({ passedRef }) => {
-  const languages = useAppSelector(state => state.languages);
-  const options = useAppSelector(state => state.options);
-  const { removeLanguageFromResult } = useAction();
+const FancyList: React.FC<LanguagesResultProps> = memo(
+  ({ passedRef }) => {
+    const languages = useAppSelector(state => state.languages);
+    const { removeLanguageFromResult } = useAction();
+    const options = useAppSelector(state => state.options);
 
-  const headerTranslates = {
-    ru: "Мой технологический стек",
-    en: "Here is my tech stack"
-  };
-  const techCategoriesTranslates = {
-    ru: {
-      frontend: "фронтенд",
-      backend: "бекенд",
-      devops: "devops",
-      others: "остальное"
-    },
-    en: {
-      frontend: "frontend",
-      backend: "backend",
-      devops: "devops",
-      others: "others"
-    }
-  };
-  const formatTitle = (t: string) => t.slice(0, 1).toUpperCase() + t.slice(1);
-
-  const FancyList = () => {
     return (
       <ul ref={passedRef} className='result-list'>
         {Object.keys(languages.selectedLanguages).map(c => (
           <li key={c} className='result-list__element result-list__tech-category'>
             <span className='result-list__category-title'>
               {formatTitle(
-                techCategoriesTranslates[options.switches.currentLangEN ? "en" : "ru"][c as keyof typeof techCategoriesTranslates["ru" | "en"]]
+                resultListTechCategoriesTranslates[options.switches.currentLangEN ? "en" : "ru"][
+                  c as keyof typeof resultListTechCategoriesTranslates["ru" | "en"]
+                ]
               )}
               :
             </span>
@@ -67,8 +52,17 @@ const LanguagesResult: React.FC<LanguagesResultProps> = ({ passedRef }) => {
         ))}
       </ul>
     );
-  };
-  const RealList = () => {
+  },
+  (prev, next) => {
+    // console.log({ prev, next, result: prev.passedRef === next.passedRef });
+    return prev.passedRef === next.passedRef;
+  }
+);
+FancyList.displayName = "FancyList";
+
+const RealList: React.FC<{ currentLang: boolean }> = memo(
+  ({ currentLang }) => {
+    const languages = useAppSelector(state => state.languages);
     return (
       <ul className='result-list--real'>
         {Object.keys(languages.selectedLanguages).map(c => (
@@ -76,7 +70,7 @@ const LanguagesResult: React.FC<LanguagesResultProps> = ({ passedRef }) => {
             <span className='result-list__category-title'>
               &ensp;-{" "}
               {formatTitle(
-                techCategoriesTranslates[options.switches.currentLangEN ? "en" : "ru"][c as keyof typeof techCategoriesTranslates["ru" | "en"]]
+                resultListTechCategoriesTranslates[currentLang ? "en" : "ru"][c as keyof typeof resultListTechCategoriesTranslates["ru" | "en"]]
               )}
               &#10;:
             </span>
@@ -94,14 +88,34 @@ const LanguagesResult: React.FC<LanguagesResultProps> = ({ passedRef }) => {
         ))}
       </ul>
     );
-  };
+  },
+  (prev, next) => prev.currentLang === next.currentLang
+);
+RealList.displayName = "RealList";
+
+const ButtonMemoLol: React.FC<{ copyCb: () => void; selectId: string }> = memo(
+  ({ copyCb }) => {
+    return (
+      <button className='languages-result__copy' onClick={copyCb}>
+        <Icon src='/icons/copy.svg' iconColor='#D8D8D8' />
+      </button>
+    );
+  },
+  (prev, next) => prev.selectId === next.selectId
+);
+
+const LanguagesResult: React.FC<LanguagesResultProps> = ({ passedRef }) => {
+  const languages = useAppSelector(state => state.languages);
+  const options = useAppSelector(state => state.options);
 
   const formattedList = () => {
     const text: string[] = [];
     Object.keys(languages.selectedLanguages).forEach(category => {
       text.push(
         ` - ${formatTitle(
-          techCategoriesTranslates[options.switches.currentLangEN ? "en" : "ru"][category as keyof typeof techCategoriesTranslates["ru" | "en"]]
+          resultListTechCategoriesTranslates[options.switches.currentLangEN ? "en" : "ru"][
+            category as keyof typeof resultListTechCategoriesTranslates["ru" | "en"]
+          ]
         )}:`
       );
       Object.keys(languages.selectedLanguages[category]).map(ce => {
@@ -116,9 +130,8 @@ const LanguagesResult: React.FC<LanguagesResultProps> = ({ passedRef }) => {
     });
     return text.join("\n");
   };
-
   const copyText = () => {
-    const text = `${headerTranslates[options.switches.currentLangEN ? "en" : "ru"]}: \n` + formattedList();
+    const text = `${resultListHeaderTranslates[options.switches.currentLangEN ? "en" : "ru"]}: \n` + formattedList();
     navigator.clipboard.writeText(text);
     console.log("text copied");
   };
@@ -134,13 +147,24 @@ const LanguagesResult: React.FC<LanguagesResultProps> = ({ passedRef }) => {
       <div className='languages-result__header'>
         <h3 className='languages-result__title'>ur result</h3>
         <span className='languages-result__subtitle'>might l00k fancy, but only here :&#40;</span>
-        <button className='languages-result__copy' onClick={copyText}>
-          <Icon src='/icons/copy.svg' iconColor='#D8D8D8' />
-        </button>
+        <ButtonMemoLol copyCb={copyText} selectId={languages.selectId} />
       </div>
-      <FocusWindow fieldName='result_list' externalClassname='languages-result__list'>
-        <span>{headerTranslates[options.switches.currentLangEN ? "en" : "ru"]}:</span>
-        {!options.switches.listTypeReal ? <FancyList /> : <RealList />}
+      <FocusWindow
+        compareProp={[
+          passedRef !== undefined,
+          languages.static.short !== null,
+          languages.selectId,
+          options.switches.listTypeReal,
+          options.switches.currentLangEN
+        ]}
+        fieldName='result_list'
+        externalClassname='languages-result__list'>
+        <span>{resultListHeaderTranslates[options.switches.currentLangEN ? "en" : "ru"]}:</span>
+        {languages.static.short !== null && !options.switches.listTypeReal ? (
+          <FancyList passedRef={passedRef} />
+        ) : (
+          <RealList currentLang={options.switches.currentLangEN} />
+        )}
       </FocusWindow>
     </div>
   );

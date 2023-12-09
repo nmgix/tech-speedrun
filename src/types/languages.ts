@@ -8,4 +8,5 @@ export type LanguageCharacteristic = {
 
 export type LanguagesCharacteristicsList = { [techName: string]: LanguageCharacteristic };
 
-export type LanguagesShort = { [techScope: string]: { [language: string]: string } };
+export type LangFields = { [language: string]: string };
+export type LanguagesShort = { [techScope: string]: LangFields };
