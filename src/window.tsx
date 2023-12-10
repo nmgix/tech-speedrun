@@ -1,5 +1,5 @@
 import { useHotkeys } from "react-hotkeys-hook";
-import { SearchCombinations } from "./types/combinations";
+import { OtherCombinations, SearchCombinations } from "./types/combinations";
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
@@ -15,17 +15,17 @@ import Options from "./components/Options";
 import { useAction, useAppSelector } from "./redux/hooks";
 import { splitPath } from "./components/Search/functions";
 import { formatId } from "./components/LanguagesList/functions";
+import KeybindsHelper from "./components/KeybindsHelper";
 
 const App: React.FC = () => {
   const { otherLang } = useEngOnly(1000);
   const languages = useAppSelector(state => state.languages);
   const options = useAppSelector(state => state.options);
-  const { setStaticLanguages, toggleSearch, setFocusPath } = useAction();
+  const { setStaticLanguages, toggleSearch, toggleKeybindsHelper, setFocusPath } = useAction();
 
-  // хук для KeysContext провайдера
-  // хоть и фигурирует слово search, но оно здесь только для ctrl+F
-  // const { enableScope } = useHotkeysContext();
-  // enableScope("search-active");
+  // useHotkeys(SearchCombinations.esc, () => setActiveKeybindsHelper(false), { preventDefault: true, enableOnFormTags: true }, [activeKeybindsHelper]);
+  useHotkeys(OtherCombinations.keybinds, () => toggleKeybindsHelper(), {}, [options.keybindsHelperActive]);
+
   useHotkeys(SearchCombinations.toggleSearch, () => toggleSearch(), { preventDefault: true, enableOnFormTags: true }, [options.searchActive]);
 
   useEffect(() => {
@@ -75,7 +75,7 @@ const App: React.FC = () => {
         element.classList.add("badge--focused");
         const elementList = element.closest(".result-list__tech-list")! as HTMLUListElement;
         if (existsInResult) {
-          elementList.style.paddingBottom = `${element.offsetHeight}px`;
+          // elementList.style.paddingBottom = `${element.offsetHeight}px`;
           element.style.position = "relative";
         }
         const focusBackground = document.body.querySelector(".focus-bg")!;
@@ -115,6 +115,7 @@ const App: React.FC = () => {
     <main className='home-window'>
       {options.searchActive && languages.static.short && createPortal(<SearchPopup />, document.body)}
       {otherLang && createPortal(<WrongLang />, document.body)}
+      {options.keybindsHelperActive && createPortal(<KeybindsHelper />, document.body)}
       <LanguagesList passedRef={listRef} />
       <div className='home-window__right-bar'>
         <LanguagesResult passedRef={resultRef} />

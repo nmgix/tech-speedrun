@@ -3,6 +3,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 export type OptionsState = {
   focus: string | null;
   searchActive: boolean;
+  keybindsHelperActive: boolean;
   switches: {
     currentLangEN: boolean;
     listTypeReal: boolean;
@@ -12,6 +13,7 @@ export type OptionsState = {
 export const initialState: OptionsState = {
   focus: null,
   searchActive: false,
+  keybindsHelperActive: false,
   switches: {
     currentLangEN: true,
     listTypeReal: false
@@ -29,6 +31,9 @@ const OptionsSlice = createSlice({
       return { ...state, focus: action.payload };
     },
 
+    toggleKeybindsHelper: state => {
+      return { ...state, keybindsHelperActive: !state.keybindsHelperActive };
+    },
     setSearchState: (state, action: PayloadAction<OptionsState["searchActive"]>) => {
       return { ...state, searchActive: action.payload };
     },

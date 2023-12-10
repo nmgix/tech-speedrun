@@ -11,16 +11,18 @@ export enum SearchCombinations {
 
   esc = "esc",
 
-  selectSuggest = "tab",
   // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
   tab = "tab",
 
   arrowDown = "ArrowDown",
-  arrowUp = "ArrowUp",
-
-  select = "ctrl+a"
+  arrowUp = "ArrowUp"
 }
 
 export enum OtherCombinations {
-  copy = "ctrl+c"
+  copy = "ctrl+c",
+  keybinds = "ctrl+space"
 }
+
+export const allKeybinds = { ...SearchCombinations, ...OtherCombinations };
+
+export type AllKeybinds = typeof SearchCombinations & typeof OtherCombinations;
