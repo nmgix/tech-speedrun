@@ -2,12 +2,34 @@
   width: 100%;
 
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 10px;
 
+  &__top {
+    display: flex;
+    flex-direction: column;
+  }
   &__title {
     font-family: "StretchSans";
     font-weight: 500;
 
     font-size: 24px;
+  }
+
+  &__helper {
+    display: flex;
+    gap: 10px;
+    opacity: 0.3;
+
+    cursor: help;
+    &:hover {
+      opacity: 1;
+    }
+
+    .icon {
+      background-color: #818181;
+    }
   }
 }

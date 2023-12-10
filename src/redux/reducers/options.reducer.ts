@@ -31,6 +31,9 @@ const OptionsSlice = createSlice({
       return { ...state, focus: action.payload };
     },
 
+    setKeybindsHelper: (state, action: PayloadAction<OptionsState["keybindsHelperActive"]>) => {
+      return { ...state, keybindsHelperActive: action.payload };
+    },
     toggleKeybindsHelper: state => {
       return { ...state, keybindsHelperActive: !state.keybindsHelperActive };
     },

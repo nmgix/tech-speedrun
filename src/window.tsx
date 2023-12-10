@@ -21,9 +21,9 @@ const App: React.FC = () => {
   const { otherLang } = useEngOnly(1000);
   const languages = useAppSelector(state => state.languages);
   const options = useAppSelector(state => state.options);
-  const { setStaticLanguages, toggleSearch, toggleKeybindsHelper, setFocusPath } = useAction();
+  const { setStaticLanguages, toggleSearch, toggleKeybindsHelper, setKeybindsHelper, setFocusPath } = useAction();
 
-  // useHotkeys(SearchCombinations.esc, () => setActiveKeybindsHelper(false), { preventDefault: true, enableOnFormTags: true }, [activeKeybindsHelper]);
+  useHotkeys(SearchCombinations.esc, () => setKeybindsHelper(false), { preventDefault: true, enableOnFormTags: true }, []);
   useHotkeys(OtherCombinations.keybinds, () => toggleKeybindsHelper(), {}, [options.keybindsHelperActive]);
 
   useHotkeys(SearchCombinations.toggleSearch, () => toggleSearch(), { preventDefault: true, enableOnFormTags: true }, [options.searchActive]);
