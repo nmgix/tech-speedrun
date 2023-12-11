@@ -1,12 +1,14 @@
 {
   "react": {
     "formattedTitle": "React",
+    "path": "frontend/react",
     "textColor": "#149ECA",
     "backgroundColor": "#23272F",
     "iconLink": "/languages-icons/react.svg"
   },
   "redux": {
     "formattedTitle": "Redux",
+    "path": "frontend/redux",
     "textColor": "#764abc",
     "backgroundColor": "#FFF",
     "iconLink": "/languages-icons/redux.svg",
@@ -14,6 +16,7 @@
   },
   "redux-toolkit": {
     "formattedTitle": "Redux Toolkit",
+    "path": "frontend/redux-toolkit",
     "textColor": "#2e2e2e",
     "backgroundColor": "#FFF",
     "iconLink": "/languages-icons/redux.svg",
@@ -21,6 +24,7 @@
   },
   "redux-saga": {
     "formattedTitle": "Redux Saga",
+    "path": "frontend/redux-saga",
     "textColor": "#2e2e2e",
     "backgroundColor": "#FFF",
     "iconLink": "/languages-icons/redux.svg",
@@ -28,6 +32,7 @@
   },
   "rtk-query": {
     "formattedTitle": "RTK Query",
+    "path": "frontend/rtk-query",
     "textColor": "#2e2e2e",
     "backgroundColor": "#FFF",
     "iconLink": "/languages-icons/redux.svg",
@@ -35,12 +40,14 @@
   },
   "next.js": {
     "formattedTitle": "Next.js",
+    "path": "frontend/next.js",
     "textColor": "#FFF",
     "backgroundColor": "#000",
     "iconLink": "/languages-icons/next-js.svg"
   },
   "mobx": {
     "formattedTitle": "MobX",
+    "path": "frontend/mobx",
     "textColor": "#dd5c15",
     "backgroundColor": "#FFF",
     "iconLink": "/languages-icons/mobx.svg",
@@ -48,21 +55,25 @@
   },
   "vue": {
     "formattedTitle": "Vue",
+    "path": "frontend/vue",
     "textColor": "#41b883",
     "backgroundColor": "#35495e",
     "iconLink": "/languages-icons/vue.svg"
   },
   "scss": {
     "formattedTitle": "SCSS",
+    "path": "frontend/scss",
     "textColor": "#FFF",
     "backgroundColor": "#cc6699",
     "iconLink": "/languages-icons/scss.svg"
   },
   "css-modules": {
-    "formattedTitle": "CSS-Modules"
+    "formattedTitle": "CSS-Modules",
+    "path": "frontend/css-modules"
   },
   "storybook": {
     "formattedTitle": "Storybook",
+    "path": "frontend/storybook",
     "textColor": "#ff4785",
     "backgroundColor": "#FFF",
     "iconLink": "/languages-icons/storybook.svg",
@@ -70,6 +81,7 @@
   },
   "styled-components": {
     "formattedTitle": "Styled Components",
+    "path": "frontend/styled-components",
     "textColor": "#db8080",
     "backgroundColor": "#FFF",
     "iconLink": "/languages-icons/styled-components.svg",
@@ -77,6 +89,7 @@
   },
   "cypress": {
     "formattedTitle": "Cypress",
+    "path": "frontend/cypress",
     "textColor": "#000",
     "backgroundColor": "#FFF",
     "iconLink": "/languages-icons/cypress.svg",
@@ -84,17 +97,22 @@
   },
 
   "node.js": {
+    "formattedTitle": "Node.JS",
+    "path": "backend/node.js",
     "textColor": "#57a645",
     "backgroundColor": "#090c15",
     "iconLink": "/languages-icons/node-js.svg"
   },
   "express.js": {
     "textColor": "#010101",
+    "path": "backend/express.js",
     "backgroundColor": "#FFF",
     "iconLink": "/languages-icons/express-js.svg",
     "borderColor": "#010101"
   },
   "nest.js": {
+    "formattedTitle": "Nest.JS",
+    "path": "backend/nest.js",
     "textColor": "#ea2845",
     "backgroundColor": "#f1f3f3",
     "iconLink": "/languages-icons/nest-js.svg",
@@ -102,11 +120,13 @@
   },
   "supertest": {
     "formattedTitle": "Supertest",
+    "path": "backend/supertest",
     "textColor": "#FFF",
     "backgroundColor": "red"
   },
   "postgresql": {
     "formattedTitle": "PostgreSQL",
+    "path": "backend/postgresql",
     "textColor": "#336791",
     "backgroundColor": "#FFF",
     "iconLink": "/languages-icons/postgresql.svg",
@@ -114,12 +134,14 @@
   },
   "mysql": {
     "formattedTitle": "MySQL",
+    "path": "backend/mysql",
     "textColor": "#FFF",
     "backgroundColor": "#00758f",
     "iconLink": "/languages-icons/mysql.svg"
   },
   "mongodb": {
     "formattedTitle": "MongoDB",
+    "path": "backend/mongodb",
     "textColor": "#13aa52",
     "backgroundColor": "#FFF",
     "iconLink": "/languages-icons/mongo.svg",
@@ -127,6 +149,7 @@
   },
   "websockets": {
     "formattedTitle": "websockets",
+    "path": "backend/websockets",
     "textColor": "#fe5d01",
     "backgroundColor": "#FFF",
     "iconLink": "/languages-icons/websockets.svg"
@@ -134,11 +157,13 @@
 
   "docker": {
     "textColor": "#ffffff",
+    "path": "devops/docker",
     "backgroundColor": "#2b97e9",
     "iconLink": "/languages-icons/docker.svg"
   },
   "git-actions": {
     "formattedTitle": "Git Actions",
+    "path": "devops/git-actions",
     "textColor": "#22272e",
     "backgroundColor": "#f5f7f9",
     "iconLink": "/languages-icons/github.svg",
@@ -147,12 +172,14 @@
 
   "javascript": {
     "formattedTitle": "Javascript",
+    "path": "others/javascript",
     "textColor": "#f7df1e",
     "backgroundColor": "#000000",
     "iconLink": "/languages-icons/javascript.svg"
   },
   "typescript": {
     "formattedTitle": "Typescript",
+    "path": "others/typescript",
     "textColor": "#3178c6",
     "backgroundColor": "#ffffff",
     "iconLink": "/languages-icons/typescript.svg",
@@ -160,6 +187,7 @@
   },
   "vscode": {
     "formattedTitle": "VScode",
+    "path": "others/vscode",
     "textColor": "#028FD6",
     "backgroundColor": "#ffffff",
     "iconLink": "/languages-icons/vscode.svg",
@@ -167,6 +195,7 @@
   },
   "jest": {
     "formattedTitle": "Jest",
+    "path": "others/jest",
     "textColor": "#99425b",
     "backgroundColor": "#27272a",
     "iconLink": "/languages-icons/jest.svg",
@@ -174,6 +203,7 @@
   },
   "webpack": {
     "formattedTitle": "Webpack",
+    "path": "others/webpack",
     "textColor": "#1c78c0",
     "backgroundColor": "#FFF",
     "iconLink": "/languages-icons/webpack.svg",
@@ -181,6 +211,7 @@
   },
   "linux": {
     "formattedTitle": "Linux",
+    "path": "others/linux",
     "textColor": "#010101",
     "backgroundColor": "#FFF",
     "iconLink": "/languages-icons/linux.svg",
@@ -188,6 +219,7 @@
   },
   "git": {
     "textColor": "#372301",
+    "path": "others/git",
     "backgroundColor": "#FFF",
     "iconLink": "/languages-icons/git.svg",
     "borderColor": "#f15135"

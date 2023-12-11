@@ -2,6 +2,7 @@ export type LanguageCharacteristic = {
   textColor: string;
   backgroundColor: string;
   iconLink: string;
+  path: string;
   formattedTitle?: string;
   borderColor?: string;
 };

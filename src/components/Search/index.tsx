@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { SearchCombinations } from "../../types/combinations";
 
 import "./search.scss";
@@ -26,6 +26,39 @@ const SearchPopup = () => {
     else setPath(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [predictionState]);
+
+  // shadow prediction
+  // искать по началу слова, например vsco -> others/vscode
+  // если нажимаешь там когда так подсказывает (будет ставить знак (?) полупрозрачный в конце в типа placeholder), подставляет подсказку в input (как при рабатывании дефолт tab)
+  const [shadowPrediction, setShadowPrediction] = useState<string | null>(null);
+  const languagesCharacteristicsKeys = useMemo(() => {
+    const langKeys = languages.static.characteristicsList !== null ? Object.keys(languages.static.characteristicsList) : null;
+    const keys = langKeys ? langKeys.sort((a, b) => a.length - b.length).join(" ") : null;
+    return keys;
+  }, [languages.static.characteristicsList]);
+  useEffect(() => {
+    if (shadowPrediction !== null && languagesCharacteristicsKeys === null) return setShadowPrediction(null);
+    setShadowPrediction(() => {
+      if (input.length === 0 || !languagesCharacteristicsKeys) return null;
+      const keys = languagesCharacteristicsKeys;
+      const wordIndex = keys.indexOf(input);
+      if (wordIndex === -1) return null;
+      const endIndex = keys.indexOf(" ", wordIndex);
+      const word = keys.substring(wordIndex, endIndex !== -1 ? endIndex : undefined);
+
+      // console.log(wordIndex, word, keys);
+      if (!word) return null;
+      else {
+        try {
+          const lang = languages.static.characteristicsList![word];
+          return lang.path;
+        } catch (error) {
+          return null;
+        }
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [input]);
 
   // индекс элемента из массива подсказок (на одном уровне)
   const [desiredPrediction, setDesiredPrediction] = useState<number | null>(null);
@@ -93,39 +126,46 @@ const SearchPopup = () => {
     desiredPrediction,
     predictionState,
     folderPrediction,
-    languages.static.short
+    languages.static.short,
+    shadowPrediction
   ]);
   function applySuggest() {
-    if (input.length === 0 && folderPrediction !== null && desiredPrediction !== null) {
-      const prediction = makeInputPrediction(folderPrediction[desiredPrediction], languages.static.short ?? {});
-      if (!prediction) return console.error("no prediction for applying");
-      const resultPath = prediction.currentPredictionEqualsString ? folderPrediction[desiredPrediction] : folderPrediction[desiredPrediction] + "/";
-      setInput(resultPath);
-      setPredictionState(makeInputPrediction(resultPath, languages.static.short ?? {}));
+    if (shadowPrediction !== null) {
+      setInput(shadowPrediction);
+      setPredictionState(makeInputPrediction(shadowPrediction, languages.static.short ?? {}));
     } else {
-      if (predictionState === null) return console.error("predcition = null");
-      if (!input.endsWith("/") && predictionState!.currentPredictionWord === splitPath(input).pop())
-        return console.error("input doesnt end with / but full prediction word");
-
-      if (predictionState.currentPredictionWord !== null && predictionState!.currentPredictionWord !== splitPath(input).pop()) {
-        // если слово неполное, но уже начато, например frontend/rea(ct)
-        const resultPath = predictionState.currentPredictionEqualsString
-          ? [...predictionState.prevWords, predictionState.currentPredictionWord].join("/")
-          : [...predictionState.prevWords, predictionState.currentPredictionWord].join("/") + "/";
+      if (input.length === 0 && folderPrediction !== null && desiredPrediction !== null) {
+        const prediction = makeInputPrediction(folderPrediction[desiredPrediction], languages.static.short ?? {});
+        if (!prediction) return console.error("no prediction for applying");
+        const resultPath = prediction.currentPredictionEqualsString ? folderPrediction[desiredPrediction] : folderPrediction[desiredPrediction] + "/";
         setInput(resultPath);
         setPredictionState(makeInputPrediction(resultPath, languages.static.short ?? {}));
-      } else if (folderPrediction !== null) {
-        // если выбирается папка/объект( с значением = строка )
-        let newPath = [input.endsWith("/") ? input.slice(0, -1) : input, folderPrediction[desiredPrediction || 0]].join("/");
-        const newPrediction = makeInputPrediction(newPath, languages.static.short ?? {});
-        if (!newPrediction) return console.error("new prediction retrieval fail");
-        if (newPrediction.currentPredictionEqualsString === false) newPath = newPath + "/";
-        setInput(newPath);
-        setPredictionState(newPrediction);
       } else {
-        return console.error("no options worked");
+        if (predictionState === null) return console.error("predcition = null");
+        if (!input.endsWith("/") && predictionState!.currentPredictionWord === splitPath(input).pop())
+          return console.error("input doesnt end with / but full prediction word");
+
+        if (predictionState.currentPredictionWord !== null && predictionState!.currentPredictionWord !== splitPath(input).pop()) {
+          // если слово неполное, но уже начато, например frontend/rea(ct)
+          const resultPath = predictionState.currentPredictionEqualsString
+            ? [...predictionState.prevWords, predictionState.currentPredictionWord].join("/")
+            : [...predictionState.prevWords, predictionState.currentPredictionWord].join("/") + "/";
+          setInput(resultPath);
+          setPredictionState(makeInputPrediction(resultPath, languages.static.short ?? {}));
+        } else if (folderPrediction !== null) {
+          // если выбирается папка/объект( с значением = строка )
+          let newPath = [input.endsWith("/") ? input.slice(0, -1) : input, folderPrediction[desiredPrediction || 0]].join("/");
+          const newPrediction = makeInputPrediction(newPath, languages.static.short ?? {});
+          if (!newPrediction) return console.error("new prediction retrieval fail");
+          if (newPrediction.currentPredictionEqualsString === false) newPath = newPath + "/";
+          setInput(newPath);
+          setPredictionState(newPrediction);
+        } else {
+          return console.error("no options worked");
+        }
       }
     }
+
     setDesiredPrediction(0);
   }
 
@@ -141,6 +181,7 @@ const SearchPopup = () => {
         fieldsToMap={languages.static.short ?? {}}
         examplePhrase={examplePhrase}
         input={input}
+        shadowPrediction={shadowPrediction}
         predictionState={predictionState}
         folderPrediction={folderPrediction}
         desiredPrediction={desiredPrediction}

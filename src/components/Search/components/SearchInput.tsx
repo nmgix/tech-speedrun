@@ -7,6 +7,8 @@ type SearchInputProps = {
   setDesiredPrediction: (desiredIndex: number | null) => void;
   fieldsToMap: TempFieldsNested;
 
+  shadowPrediction: string | null;
+
   input: string;
   folderPrediction: string[] | null;
   predictionState: PredictionState | null;
@@ -17,7 +19,7 @@ type SearchInputProps = {
 
 const SearchInput: React.FC<SearchInputProps> = props => {
   const { setInput, setPredictionState, setDesiredPrediction } = props;
-  const { input, folderPrediction, predictionState, desiredPrediction } = props;
+  const { input, folderPrediction, predictionState, desiredPrediction, shadowPrediction } = props;
   const { fieldsToMap, examplePhrase } = props;
 
   const onInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,7 +41,12 @@ const SearchInput: React.FC<SearchInputProps> = props => {
   return (
     <div className='search-popup__search-block'>
       <span className='search-popup__ghost-text unselectable '>
-        {input.length > 0 || (folderPrediction !== null && desiredPrediction !== null) ? (
+        {shadowPrediction !== null ? (
+          <>
+            <span className='search-popup__ghost-text--current'>{input}</span>
+            <span className='search-popup__ghost-text--prediction'> (?)</span>
+          </>
+        ) : input.length > 0 || (folderPrediction !== null && desiredPrediction !== null) ? (
           <>
             {input.length > 0 && <span className='search-popup__ghost-text--current'>{input}</span>}
             {predictionState !== null && predictionState.currentPredictionWord && (
