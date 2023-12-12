@@ -6,7 +6,7 @@ import TechBadge from "../LanguagesList/TechBadge";
 import { OtherCombinations } from "../../types/combinations";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useAction, useAppSelector } from "../../redux/hooks";
-import { memo, useMemo } from "react";
+import { memo } from "react";
 import { formatTitle } from "./functions";
 import { resultListHeaderTranslates, resultListTechCategoriesTranslates } from "../../types/translates";
 
@@ -16,9 +16,9 @@ type LanguagesResultProps = {
 
 const FancyList: React.FC<LanguagesResultProps> = memo(
   ({ passedRef }) => {
-    const languages = useAppSelector(state => state.languages);
+    const languages = useAppSelector(state => state.present.languages);
     const { removeLanguageFromResult } = useAction();
-    const options = useAppSelector(state => state.options);
+    const options = useAppSelector(state => state.present.options);
 
     return (
       <ul ref={passedRef} className='result-list'>
@@ -61,7 +61,7 @@ FancyList.displayName = "FancyList";
 
 const RealList: React.FC<{ currentLang: boolean }> = memo(
   ({ currentLang }) => {
-    const languages = useAppSelector(state => state.languages);
+    const languages = useAppSelector(state => state.present.languages);
     return (
       <ul className='result-list--real'>
         {Object.keys(languages.selectedLanguages).map(c => (
@@ -104,8 +104,8 @@ const ButtonMemoLol: React.FC<{ copyCb: () => void; selectId: string }> = memo(
 );
 
 const LanguagesResult: React.FC<LanguagesResultProps> = ({ passedRef }) => {
-  const languages = useAppSelector(state => state.languages);
-  const options = useAppSelector(state => state.options);
+  const languages = useAppSelector(state => state.present.languages);
+  const options = useAppSelector(state => state.present.options);
 
   const formattedList = () => {
     const text: string[] = [];

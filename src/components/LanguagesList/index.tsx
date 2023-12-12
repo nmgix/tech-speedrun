@@ -10,7 +10,7 @@ type LanguagesListProps = {
 };
 
 const LanguagesList: React.FC<LanguagesListProps> = ({ passedRef }) => {
-  const languages = useAppSelector(state => state.languages);
+  const languages = useAppSelector(state => state.present.languages);
   const { addLanguageToResult } = useAction();
 
   // useEffect(() => {

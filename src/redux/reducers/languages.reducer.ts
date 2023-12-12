@@ -49,6 +49,10 @@ const LanguagesSlice = createSlice({
         console.error("word in list aready");
         return state;
       } else {
+        // вот тут вешать фокус если добавлен в result list
+        // а он здесь добавлен, так что вешаться фокус автоматически будет на resultList
+        // можно попробовать в хук в котором в dependencies стоит options.focus сделать сокращение пути если точно знаешь где находится элемент чтобы не мапать всё что можно как хук делает обычно
+
         // тут костыль, но мне лень логику усложнять
         const newLangs = Object.assign({}, state.selectedLanguages);
         // if (exists) {
@@ -69,8 +73,14 @@ const LanguagesSlice = createSlice({
     removeLanguageFromResult: (state, action: PayloadAction<string>) => {
       const word = splitPath(action.payload).pop();
       const exists = makeInputPrediction(action.payload, { ...state.selectedLanguages });
-      if (!exists) return state;
-      else {
+      if (!exists) {
+        // вот тут вешать фокус если НЕ добавлен в result list
+        // а он здесь не добавлен, так что вешаться фокус автоматически будет на langList
+        // можно попробовать в хук в котором в dependencies стоит options.focus сделать сокращение пути если точно знаешь где находится элемент чтобы не мапать всё что можно как хук делает обычно
+
+        return state;
+      } else {
+        console.log(2);
         const newLangs = Object.assign({}, state.selectedLanguages);
         const path = splitPath(action.payload);
         delete newLangs[path[0]][word!];

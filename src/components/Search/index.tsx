@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { SearchCombinations } from "../../types/combinations";
+import { HistoryCombinations, SearchCombinations } from "../../types/combinations";
 
 import "./search.scss";
 import { useHotkeys } from "react-hotkeys-hook";
@@ -12,8 +12,18 @@ import { useRandomWord, useSearchHotkeys } from "./hooks";
 import { useAction, useAppSelector } from "../../redux/hooks";
 
 const SearchPopup = () => {
-  const languages = useAppSelector(state => state.languages);
-  const { addLanguageToResult, removeLanguageFromResult, setPath, setFocusPath } = useAction();
+  const languages = useAppSelector(state => state.present.languages);
+  // const search = useAppSelector(state => state.present.search);
+  const { addLanguageToResult, removeLanguageFromResult, setFocusPath, setScope } = useAction();
+
+  // отключение глобального history, ну ctrl+z, ctrl+x
+  useEffect(() => {
+    setScope({ scope: "main-history", active: false });
+    return () => {
+      setScope({ scope: "main-history", active: true });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [input, setInput] = useState("");
   // базовые кнопки, возможно потом уедут обратно сюда
@@ -21,11 +31,48 @@ const SearchPopup = () => {
 
   // общий стейт подсказки, какое текущее слово подсказывается, является ли оно строчкой, его местоположение в объекте fieldsToMap
   const [predictionState, setPredictionState] = useState<PredictionState | null>(null);
-  useEffect(() => {
-    if (predictionState && predictionState.currentPredictionEqualsString === true) setPath(input);
-    else setPath(null);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [predictionState]);
+
+  // ctrl+z, ctrl+x для search
+  const [clipboard, setClipboard] = useState<string[]>([]);
+  const undoPathLevel = () => {
+    const pathSplit = splitPath(input);
+    const lastElem = [...pathSplit].pop();
+    if (!lastElem) return console.error("no word for clipboard");
+    const toClipBoard: string = lastElem + (input.endsWith("/") ? "/" : "");
+    const restOfInput: string = input.replace(new RegExp(toClipBoard + "$"), "");
+
+    if (!toClipBoard) return console.error("no word for clipboard");
+    const resultPath = restOfInput;
+    setInput(resultPath);
+    setClipboard(prevClip => [...prevClip, toClipBoard]);
+    setPredictionState(makeInputPrediction(resultPath, languages.static.short ?? {}));
+  };
+  const redoPathLevel = () => {
+    const lastElem = [...clipboard].pop();
+    if (!lastElem) return console.error("no word in clipboard");
+    const resultPath = input.endsWith("/") ? input + lastElem : [input, lastElem].filter(w => w.length > 0).join("/");
+    setInput(resultPath);
+    setClipboard(prevClip => prevClip.slice(0, -1));
+    setPredictionState(makeInputPrediction(resultPath, languages.static.short ?? {}));
+  };
+  useHotkeys(
+    HistoryCombinations.undo,
+    undoPathLevel,
+    {
+      enableOnFormTags: true,
+      enableOnContentEditable: true
+    },
+    [input, clipboard]
+  );
+  useHotkeys(
+    HistoryCombinations.redo,
+    redoPathLevel,
+    {
+      enableOnFormTags: true,
+      enableOnContentEditable: true
+    },
+    [input, clipboard]
+  );
 
   // shadow prediction
   // искать по началу слова, например vsco -> others/vscode
@@ -46,7 +93,6 @@ const SearchPopup = () => {
       const endIndex = keys.indexOf(" ", wordIndex);
       const word = keys.substring(wordIndex, endIndex !== -1 ? endIndex : undefined);
 
-      // console.log(wordIndex, word, keys);
       if (!word) return null;
       else {
         try {

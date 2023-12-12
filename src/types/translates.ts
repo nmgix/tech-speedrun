@@ -5,7 +5,7 @@ type Translates<someType = object> = {
   en: someType | string;
 };
 
-export const resultListHeaderTranslates: Translates = {
+export const resultListHeaderTranslates: Translates<string> = {
   ru: "Мой технологический стек",
   en: "Here is my tech stack"
 };
@@ -60,6 +60,14 @@ export const keybindsDescriptions: Translates<{ [keybind in keyof Partial<AllKey
 
     copy: {
       title: "Копирование текста из результата"
+    },
+
+    undo: {
+      title: "Отменить последнее действие"
+    },
+
+    redo: {
+      title: "Повторить последнее действие"
     }
   },
   en: {
@@ -95,6 +103,14 @@ export const keybindsDescriptions: Translates<{ [keybind in keyof Partial<AllKey
     },
     copy: {
       title: "Copy Text from result list"
+    },
+
+    undo: {
+      title: "Undo last action"
+    },
+
+    redo: {
+      title: "Redo last action"
     }
   }
 };

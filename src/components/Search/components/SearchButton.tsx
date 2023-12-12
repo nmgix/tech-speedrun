@@ -2,6 +2,7 @@ import { useState } from "react";
 import { nestInObj, searchFunctions } from "../functions";
 import { ActiveCombination, PredictionState, TempFieldsNested } from "../types";
 import { useClosePopup, useSearchButtonHotkeys } from "../hooks";
+import { useAction } from "../../../redux/hooks";
 
 type SearchButtonProps = {
   input: string;
@@ -12,6 +13,7 @@ type SearchButtonProps = {
 const SearchButton: React.FC<SearchButtonProps> = ({ input, predictionState, fieldsToMap }) => {
   const [activeCombination, setActiveCombination] = useState<ActiveCombination>(null);
   const closePopup = useClosePopup();
+  const { addLanguageToResult, removeLanguageFromResult, setFocusPath } = useAction();
   useSearchButtonHotkeys(input, activeCombination, setActiveCombination);
 
   if (
@@ -29,14 +31,18 @@ const SearchButton: React.FC<SearchButtonProps> = ({ input, predictionState, fie
   switch (activeCombination) {
     case "add": {
       return (
-        <button className='search-popup__button search-popup__button--add' onClick={() => searchFunctions.add(input, closePopup)}>
+        <button
+          className='search-popup__button search-popup__button--add'
+          onClick={() => searchFunctions.add(input, closePopup, addLanguageToResult)}>
           +
         </button>
       );
     }
     case "remove": {
       return (
-        <button className='search-popup__button search-popup__button--remove' onClick={() => searchFunctions.remove(input, closePopup)}>
+        <button
+          className='search-popup__button search-popup__button--remove'
+          onClick={() => searchFunctions.remove(input, closePopup, removeLanguageFromResult)}>
           -
         </button>
       );
@@ -44,7 +50,7 @@ const SearchButton: React.FC<SearchButtonProps> = ({ input, predictionState, fie
     case "search":
     default: {
       return (
-        <button className='search-popup__button search-popup__button--search' onClick={() => searchFunctions.search(input, closePopup)}>
+        <button className='search-popup__button search-popup__button--search' onClick={() => searchFunctions.search(input, closePopup, setFocusPath)}>
           <img src='/icons/search-magnify.svg' />
         </button>
       );

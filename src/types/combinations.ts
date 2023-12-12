@@ -9,8 +9,6 @@ export enum SearchCombinations {
   remove = "shift+alt+enter, ctrl+shift+enter",
   preRemove = "shift+alt, ctrl+shift",
 
-  esc = "esc",
-
   // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
   tab = "tab",
 
@@ -19,10 +17,16 @@ export enum SearchCombinations {
 }
 
 export enum OtherCombinations {
+  esc = "esc",
   copy = "ctrl+c",
   keybinds = "ctrl+space"
 }
 
-export const allKeybinds = { ...SearchCombinations, ...OtherCombinations };
+export enum HistoryCombinations {
+  undo = "ctrl+z",
+  redo = "ctrl+x, ctrl+shift+z"
+}
 
-export type AllKeybinds = typeof SearchCombinations & typeof OtherCombinations;
+export const allKeybinds = { ...SearchCombinations, ...OtherCombinations, ...HistoryCombinations };
+
+export type AllKeybinds = typeof SearchCombinations & typeof OtherCombinations & typeof HistoryCombinations;

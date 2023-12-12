@@ -10,7 +10,7 @@ import classNames from "classnames";
 const KeybindsHelper = () => {
   const {
     switches: { currentLangEN }
-  } = useAppSelector(state => state.options);
+  } = useAppSelector(state => state.present.options);
 
   const activeButtons = useKeybindsHighlighter(allKeybinds);
 

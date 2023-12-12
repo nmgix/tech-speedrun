@@ -12,18 +12,22 @@ import LanguagesResult from "./components/LanguagesResult";
 import "./window.scss";
 import "./components/LanguagesList/tech.scss";
 import Options from "./components/Options";
-import { useAction, useAppSelector } from "./redux/hooks";
+import { useAction, useAppSelector, useUndoable } from "./redux/hooks";
 import { splitPath } from "./components/Search/functions";
 import { formatId } from "./components/LanguagesList/functions";
 import KeybindsHelper from "./components/KeybindsHelper";
 
+import { ActionCreators as HistoryActionCreators } from "redux-undo";
+import store from "./redux/store";
+
 const App: React.FC = () => {
   const { otherLang } = useEngOnly(1000);
-  const languages = useAppSelector(state => state.languages);
-  const options = useAppSelector(state => state.options);
+  const languages = useAppSelector(state => state.present.languages);
+  const options = useAppSelector(state => state.present.options);
   const { setStaticLanguages, toggleSearch, toggleKeybindsHelper, setKeybindsHelper, setFocusPath } = useAction();
 
-  useHotkeys(SearchCombinations.esc, () => setKeybindsHelper(false), { preventDefault: true, enableOnFormTags: true }, []);
+  useUndoable();
+  useHotkeys(OtherCombinations.esc, () => setKeybindsHelper(false), { preventDefault: true, enableOnFormTags: true }, []);
   useHotkeys(OtherCombinations.keybinds, () => toggleKeybindsHelper(), {}, [options.keybindsHelperActive]);
 
   useHotkeys(SearchCombinations.toggleSearch, () => toggleSearch(), { preventDefault: true, enableOnFormTags: true }, [options.searchActive]);
@@ -45,6 +49,7 @@ const App: React.FC = () => {
       }).then(res => res.json());
 
       setStaticLanguages({ short: fetchedLanguages, characteristicsList: fetchedLanguagesCharacteristics });
+      store.dispatch(HistoryActionCreators.clearHistory());
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -52,6 +57,7 @@ const App: React.FC = () => {
   const listRef = useRef<HTMLDivElement>(null);
   const resultRef = useRef<HTMLUListElement>(null);
 
+  // выделение focused технологии по options.focus пути
   useEffect(() => {
     if (!resultRef.current || !listRef.current) return console.error("refs not inited");
     if (options.focus !== null && options.focus.length > 0) {

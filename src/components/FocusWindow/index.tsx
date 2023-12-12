@@ -13,7 +13,7 @@ type FocusWindowProps = {
 
 const FocusWindow: React.FC<FocusWindowProps> = memo(
   ({ children, fieldName, externalClassname, passedRef }) => {
-    const { focus } = useAppSelector(state => state.options);
+    const { focus } = useAppSelector(state => state.present.options);
 
     return (
       <div ref={passedRef} className={classNames("focus-window", { "focus-window--active": fieldName === focus }, externalClassname)}>

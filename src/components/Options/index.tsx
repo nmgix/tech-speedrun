@@ -4,7 +4,7 @@ import OptionsSwitch from "./OptionsSwitch";
 import "./options.scss";
 
 const Options: React.FC = () => {
-  const options = useAppSelector(state => state.options);
+  const options = useAppSelector(state => state.present.options);
   const { setSwitch } = useAction();
 
   return (

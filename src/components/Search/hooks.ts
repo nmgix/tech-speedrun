@@ -1,5 +1,5 @@
 import { useHotkeys } from "react-hotkeys-hook";
-import { SearchCombinations } from "../../types/combinations";
+import { OtherCombinations, SearchCombinations } from "../../types/combinations";
 import { searchFunctions } from "./functions";
 import { useRef } from "react";
 import { ActiveCombination } from "./types";
@@ -31,7 +31,7 @@ export const useSearchHotkeys = (
   const closePopup = useClosePopup();
 
   // хэндл закрытия через ESC
-  useHotkeys(SearchCombinations.esc, closePopup, { preventDefault: true, enableOnFormTags: ["input"] }, [input]);
+  useHotkeys(OtherCombinations.esc, closePopup, { preventDefault: true, enableOnFormTags: ["input"] }, [input]);
 
   // поиск через Enter
   // показать где находится (в левом или правом списке сделать фокус, поиск через global lists state, наверное)
