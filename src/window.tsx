@@ -20,6 +20,9 @@ import KeybindsHelper from "./components/KeybindsHelper";
 import { ActionCreators as HistoryActionCreators } from "redux-undo";
 import store from "./redux/store";
 
+import { isMobile } from "react-device-detect";
+import classNames from "classnames";
+
 const App: React.FC = () => {
   const { otherLang } = useEngOnly(1000);
   const languages = useAppSelector(state => state.present.languages);
@@ -118,11 +121,20 @@ const App: React.FC = () => {
   }, [options.focus]);
 
   return (
-    <main className='home-window'>
+    <main
+      style={
+        options.mobile.currentScreenIndex > 0
+          ? { left: `calc((100vw - 40px - 40px) * -${options.mobile.currentScreenIndex})` }
+          : // ? { left: `calc((100vw - 40px - 40px) + (40 * ${options.mobile.currentScreenIndex - 1}) * -${options.mobile.currentScreenIndex})` }
+            { left: `40px` }
+      }
+      className={classNames("home-window", { "home-window--mobile": isMobile })}>
       {options.searchActive && languages.static.short && createPortal(<SearchPopup />, document.body)}
       {otherLang && createPortal(<WrongLang />, document.body)}
       {options.keybindsHelperActive && createPortal(<KeybindsHelper />, document.body)}
-      <LanguagesList passedRef={listRef} />
+      <div className='home-window__left-bar'>
+        <LanguagesList passedRef={listRef} />
+      </div>
       <div className='home-window__right-bar'>
         <LanguagesResult passedRef={resultRef} />
         <Options />

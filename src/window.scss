@@ -1,11 +1,10 @@
 .home-window {
-  width: 100%;
-  flex: 1;
+  height: 90%;
 
   display: flex;
   justify-content: space-between;
   flex-wrap: nowrap;
-  gap: 35px;
+  gap: 40px;
 
   .languages__list {
     flex: 1.85;
@@ -15,12 +14,39 @@
     flex: 1.15;
   }
 
-  &__right-bar {
+  &__left-bar {
+    flex: 1.85;
+  }
+
+  &__right-bar,
+  &__left-bar {
     display: flex;
     flex-direction: column;
     gap: 15px;
   }
+
+  &--mobile {
+    position: fixed;
+    top: 100px;
+    height: 75%;
+
+    // @media (horizontal-viewport-segments: 2) {
+    //   background: red;
+    // можно потом попробовать разделить на два страницы два list в portrait режиме
+    // https://www.lambdatest.com/blog/css-website-layouts/
+    // }
+
+    .home-window__right-bar,
+    .home-window__left-bar {
+      width: calc(100vw - 40px - 40px);
+      max-width: calc(100vw - 40px - 40px);
+    }
+  }
 }
+
+// body:has(.home-window--mobile) {
+//   overflow: hidden;
+// }
 
 .focus-bg {
   display: none;

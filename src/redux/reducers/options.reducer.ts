@@ -1,6 +1,9 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export type OptionsState = {
+  mobile: {
+    currentScreenIndex: number;
+  };
   focus: string | null;
   searchActive: boolean;
   keybindsHelperActive: boolean;
@@ -11,6 +14,9 @@ export type OptionsState = {
 };
 
 export const initialState: OptionsState = {
+  mobile: {
+    currentScreenIndex: 0
+  },
   focus: null,
   searchActive: false,
   keybindsHelperActive: false,
@@ -42,6 +48,10 @@ const OptionsSlice = createSlice({
     },
     toggleSearch: state => {
       return { ...state, searchActive: !state.searchActive };
+    },
+
+    setMobileOptions: (state, action: PayloadAction<Partial<OptionsState["mobile"]>>) => {
+      return { ...state, mobile: { ...state.mobile, ...action.payload } };
     }
   }
 });

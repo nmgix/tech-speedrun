@@ -8,16 +8,18 @@ type FocusWindowProps = {
   fieldName: string;
   compareProp: string | boolean | object | null | undefined | (string | boolean | object | null | undefined)[];
   externalClassname?: string;
+  extetnalContentClassname?: string;
   passedRef?: React.LegacyRef<HTMLDivElement>;
 };
 
 const FocusWindow: React.FC<FocusWindowProps> = memo(
-  ({ children, fieldName, externalClassname, passedRef }) => {
+  ({ children, fieldName, externalClassname, extetnalContentClassname, passedRef }) => {
     const { focus } = useAppSelector(state => state.present.options);
 
     return (
       <div ref={passedRef} className={classNames("focus-window", { "focus-window--active": fieldName === focus }, externalClassname)}>
-        {children}
+        <div className='focus-window__border' />
+        <div className={classNames("focus-window__content", extetnalContentClassname)}>{children}</div>
       </div>
     );
   },

@@ -1,10 +1,19 @@
 .languages {
   &__list {
-    padding: 14px 22px;
+    &--mobile {
+      .languages__focus-content {
+        padding: 10px 15px;
+      }
+    }
+  }
 
+  &__focus-content {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    overflow-y: auto;
+
+    padding-top: 2px;
   }
 
   &__wrapper {
