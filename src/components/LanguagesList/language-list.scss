@@ -1,6 +1,8 @@
 .languages {
   &__list {
     &--mobile {
+      height: 90%;
+
       .languages__focus-content {
         padding: 10px 15px;
       }
