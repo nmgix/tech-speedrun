@@ -6,6 +6,7 @@ import "./keybinds-helper.scss";
 import { allKeybinds } from "../../types/combinations";
 import useKeybindsHighlighter from "./useKeybindsHighlighter";
 import classNames from "classnames";
+import { createPortal } from "react-dom";
 
 const KeybindsHelper = () => {
   const {
@@ -58,6 +59,11 @@ const KeybindsHelper = () => {
       </div>
     </div>
   );
+};
+
+export const KeybindsHelperListener: React.FC<{ active: boolean }> = ({ active }) => {
+  if (!active) return null;
+  return createPortal(<KeybindsHelper />, document.body);
 };
 
 export default KeybindsHelper;

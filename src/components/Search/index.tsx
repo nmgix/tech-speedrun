@@ -10,6 +10,7 @@ import SearchButton from "./components/SearchButton";
 import SearchInput from "./components/SearchInput";
 import { useRandomWord, useSearchHotkeys } from "./hooks";
 import { useAction, useAppSelector } from "../../redux/hooks";
+import { createPortal } from "react-dom";
 
 const SearchPopup = () => {
   const languages = useAppSelector(state => state.present.languages);
@@ -235,6 +236,11 @@ const SearchPopup = () => {
       <SearchButton predictionState={predictionState} input={input} fieldsToMap={languages.static.short ?? {}} />
     </div>
   );
+};
+
+export const PopupListener: React.FC<{ active: boolean }> = ({ active }) => {
+  if (!active) return null;
+  return createPortal(<SearchPopup />, document.body);
 };
 
 export default SearchPopup;

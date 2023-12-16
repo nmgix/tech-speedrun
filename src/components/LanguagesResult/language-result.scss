@@ -7,6 +7,10 @@
   gap: 10px;
   flex: 1;
 
+  &--mobile {
+    height: 75%;
+  }
+
   &__header {
     flex: 0;
     display: flex;
@@ -45,6 +49,10 @@
 
     &--mobile {
       height: 90%;
+
+      @media screen and (orientation: landscape) {
+        height: 75%;
+      }
     }
   }
 }

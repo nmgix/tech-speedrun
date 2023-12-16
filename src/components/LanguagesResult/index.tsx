@@ -9,6 +9,8 @@ import { useAction, useAppSelector } from "../../redux/hooks";
 import { memo } from "react";
 import { formatTitle } from "./functions";
 import { resultListHeaderTranslates, resultListTechCategoriesTranslates } from "../../types/translates";
+import classNames from "classnames";
+import { isMobile } from "react-device-detect";
 
 type LanguagesResultProps = {
   passedRef?: React.LegacyRef<HTMLUListElement>;
@@ -131,6 +133,8 @@ const LanguagesResult: React.FC<LanguagesResultProps> = ({ passedRef }) => {
   };
   const copyText = () => {
     const text = `${resultListHeaderTranslates[options.switches.currentLangEN ? "en" : "ru"]}: \n` + formattedList();
+    // не работает на мобилке потому что
+    // https://stackoverflow.com/a/72679789/14889638
     navigator.clipboard.writeText(text);
     console.log("text copied");
   };
@@ -142,7 +146,7 @@ const LanguagesResult: React.FC<LanguagesResultProps> = ({ passedRef }) => {
   ]);
 
   return (
-    <div className='languages-result'>
+    <div className={classNames("languages-result", { "languages-result--mobile": isMobile })}>
       <div className='languages-result__header'>
         <h3 className='languages-result__title'>ur result</h3>
         <span className='languages-result__subtitle'>might l00k fancy, but only here :&#40;</span>
@@ -157,7 +161,7 @@ const LanguagesResult: React.FC<LanguagesResultProps> = ({ passedRef }) => {
           options.switches.currentLangEN
         ]}
         fieldName='result_list'
-        externalClassname='languages-result__list'>
+        externalClassname={classNames("languages-result__list", { "languages-result__list--mobile": isMobile })}>
         <span>{resultListHeaderTranslates[options.switches.currentLangEN ? "en" : "ru"]}:</span>
         {languages.static.short !== null && !options.switches.listTypeReal ? (
           <FancyList passedRef={passedRef} />

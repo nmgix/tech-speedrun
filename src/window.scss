@@ -30,6 +30,10 @@
     top: 100px;
     height: 85%;
 
+    @media screen and (orientation: landscape) {
+      height: 65%;
+    }
+
     // @media (horizontal-viewport-segments: 2) {
     //   background: red;
     // можно потом попробовать разделить на два страницы два list в portrait режиме

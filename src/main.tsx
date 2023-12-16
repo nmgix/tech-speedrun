@@ -7,13 +7,10 @@ import Header from "./components/Header";
 
 import "./styles/index.scss";
 import "./styles/app.scss";
-import { MobileButtons } from "./TempMobile";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
     <Header />
     <App />
-    <div className='focus-bg' />
-    <MobileButtons />
   </Provider>
 );

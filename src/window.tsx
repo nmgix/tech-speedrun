@@ -1,27 +1,29 @@
-import { useHotkeys } from "react-hotkeys-hook";
-import { OtherCombinations, SearchCombinations } from "./types/combinations";
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-
-import SearchPopup from "./components/Search";
-import useEngOnly from "./components/WrongLang/useEngOnly";
-import WrongLang from "./components/WrongLang";
-import LanguagesList from "./components/LanguagesList";
-import LanguagesResult from "./components/LanguagesResult";
+import { ActionCreators as HistoryActionCreators } from "redux-undo";
+import { useHotkeys } from "react-hotkeys-hook";
+import { isMobile } from "react-device-detect";
+import classNames from "classnames";
 
 import "./window.scss";
 import "./components/LanguagesList/tech.scss";
-import Options from "./components/Options";
+import { OtherCombinations, SearchCombinations } from "./types/combinations";
+
+import store from "./redux/store";
 import { useAction, useAppSelector, useUndoable } from "./redux/hooks";
+
+import useEngOnly from "./components/WrongLang/useEngOnly";
+import LanguagesList from "./components/LanguagesList";
+import LanguagesResult from "./components/LanguagesResult";
+import Options from "./components/Options";
+import { MobileWrapper } from "./components/MobileWrapper/index";
+
 import { splitPath } from "./components/Search/functions";
 import { formatId } from "./components/LanguagesList/functions";
-import KeybindsHelper from "./components/KeybindsHelper";
 
-import { ActionCreators as HistoryActionCreators } from "redux-undo";
-import store from "./redux/store";
-
-import { isMobile } from "react-device-detect";
-import classNames from "classnames";
+import { KeybindsHelperListener } from "./components/KeybindsHelper";
+import { PopupListener } from "./components/Search";
+import { WrongLangListener } from "./components/WrongLang";
 
 const App: React.FC = () => {
   const { otherLang } = useEngOnly(1000);
@@ -121,25 +123,22 @@ const App: React.FC = () => {
   }, [options.focus]);
 
   return (
-    <main
-      style={
-        options.mobile.currentScreenIndex > 0
-          ? { left: `calc((100vw - 40px - 40px) * -${options.mobile.currentScreenIndex})` }
-          : // ? { left: `calc((100vw - 40px - 40px) + (40 * ${options.mobile.currentScreenIndex - 1}) * -${options.mobile.currentScreenIndex})` }
-            { left: `40px` }
-      }
-      className={classNames("home-window", { "home-window--mobile": isMobile })}>
-      {options.searchActive && languages.static.short && createPortal(<SearchPopup />, document.body)}
-      {otherLang && createPortal(<WrongLang />, document.body)}
-      {options.keybindsHelperActive && createPortal(<KeybindsHelper />, document.body)}
-      <div className='home-window__left-bar'>
-        <LanguagesList passedRef={listRef} />
-      </div>
-      <div className='home-window__right-bar'>
-        <LanguagesResult passedRef={resultRef} />
-        <Options />
-      </div>
-    </main>
+    <MobileWrapper className={classNames("home-window", { "home-window--mobile": isMobile })}>
+      <main>
+        <PopupListener active={options.searchActive == true && languages.static.short !== null} />
+        <WrongLangListener active={otherLang} />
+        <KeybindsHelperListener active={options.keybindsHelperActive} />
+        <div className='home-window__left-bar'>
+          <LanguagesList passedRef={listRef} />
+        </div>
+        <div className='home-window__right-bar'>
+          <LanguagesResult passedRef={resultRef} />
+          <Options />
+        </div>
+
+        {createPortal(<div className='focus-bg' />, document.body)}
+      </main>
+    </MobileWrapper>
   );
 };
 
