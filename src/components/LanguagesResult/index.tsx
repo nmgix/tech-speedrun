@@ -29,7 +29,7 @@ const FancyList: React.FC<LanguagesResultProps> = memo(
             <span className='result-list__category-title'>
               {formatTitle(
                 resultListTechCategoriesTranslates[options.switches.currentLangEN ? "en" : "ru"][
-                  c as keyof typeof resultListTechCategoriesTranslates["ru" | "en"]
+                  c as keyof (typeof resultListTechCategoriesTranslates)["ru" | "en"]
                 ]
               )}
               :
@@ -71,7 +71,7 @@ const RealList: React.FC<{ currentLang: boolean }> = memo(
             <span className='result-list__category-title'>
               &ensp;-{" "}
               {formatTitle(
-                resultListTechCategoriesTranslates[currentLang ? "en" : "ru"][c as keyof typeof resultListTechCategoriesTranslates["ru" | "en"]]
+                resultListTechCategoriesTranslates[currentLang ? "en" : "ru"][c as keyof (typeof resultListTechCategoriesTranslates)["ru" | "en"]]
               )}
               &#10;:
             </span>
@@ -94,7 +94,7 @@ const RealList: React.FC<{ currentLang: boolean }> = memo(
 );
 RealList.displayName = "RealList";
 
-const ButtonMemoLol: React.FC<{ copyCb: () => void; selectId: string }> = memo(
+const ButtonMemo: React.FC<{ copyCb: () => void; selectId: string }> = memo(
   ({ copyCb }) => {
     return (
       <button className='languages-result__copy' onClick={copyCb}>
@@ -115,7 +115,7 @@ const LanguagesResult: React.FC<LanguagesResultProps> = ({ passedRef }) => {
       text.push(
         ` - ${formatTitle(
           resultListTechCategoriesTranslates[options.switches.currentLangEN ? "en" : "ru"][
-            category as keyof typeof resultListTechCategoriesTranslates["ru" | "en"]
+            category as keyof (typeof resultListTechCategoriesTranslates)["ru" | "en"]
           ]
         )}:`
       );
@@ -132,7 +132,11 @@ const LanguagesResult: React.FC<LanguagesResultProps> = ({ passedRef }) => {
     return text.join("\n");
   };
   const copyText = () => {
-    const text = `${resultListHeaderTranslates[options.switches.currentLangEN ? "en" : "ru"]}: \n` + formattedList();
+    const formattedLangList = formattedList();
+    if (formattedLangList.length === 0) {
+      return console.log("Нечего копировать!");
+    }
+    const text = `${resultListHeaderTranslates[options.switches.currentLangEN ? "en" : "ru"]}: \n` + formattedLangList;
     // не работает на мобилке потому что
     // https://stackoverflow.com/a/72679789/14889638
     navigator.clipboard.writeText(text);
@@ -150,7 +154,7 @@ const LanguagesResult: React.FC<LanguagesResultProps> = ({ passedRef }) => {
       <div className='languages-result__header'>
         <h3 className='languages-result__title'>ur result</h3>
         <span className='languages-result__subtitle'>might l00k fancy, but only here :&#40;</span>
-        <ButtonMemoLol copyCb={copyText} selectId={languages.selectId} />
+        <ButtonMemo copyCb={copyText} selectId={languages.selectId} />
       </div>
       <FocusWindow
         compareProp={[
