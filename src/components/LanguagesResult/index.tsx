@@ -108,6 +108,7 @@ const ButtonMemo: React.FC<{ copyCb: () => void; selectId: string }> = memo(
 const LanguagesResult: React.FC<LanguagesResultProps> = ({ passedRef }) => {
   const languages = useAppSelector(state => state.present.languages);
   const options = useAppSelector(state => state.present.options);
+  const { setMobileOptions } = useAction();
 
   const formattedList = () => {
     const text: string[] = [];
@@ -151,8 +152,18 @@ const LanguagesResult: React.FC<LanguagesResultProps> = ({ passedRef }) => {
 
   return (
     <div className={classNames("languages-result", { "languages-result--mobile": isMobile })}>
-      <div className='languages-result__header'>
-        <h3 className='languages-result__title'>ur result</h3>
+      {/*                                                                         (ó﹏ò｡)       */}
+      <div className={classNames("languages-result__header", { "languages-result__copy-header-fix": isMobile })}>
+        {isMobile ? (
+          <div className='languages-result__title-wrapper'>
+            <h3 className='languages-result__title languages-result__title--turned-off'>
+              <button onClick={() => setMobileOptions({ currentScreenIndex: 0 })}>langs list</button>
+            </h3>
+            <h3 className='languages-result__title'>ur result</h3>
+          </div>
+        ) : (
+          <h3 className='languages-result__title'>ur result</h3>
+        )}
         <span className='languages-result__subtitle'>might l00k fancy, but only here :&#40;</span>
         <ButtonMemo copyCb={copyText} selectId={languages.selectId} />
       </div>

@@ -128,6 +128,7 @@ const App: React.FC = () => {
         <PopupListener active={options.searchActive == true && languages.static.short !== null} />
         <WrongLangListener active={otherLang} />
         <KeybindsHelperListener active={options.keybindsHelperActive} />
+
         <div className='home-window__left-bar'>
           <LanguagesList passedRef={listRef} />
         </div>

@@ -14,12 +14,36 @@
   &__header {
     flex: 0;
     display: flex;
+    // justify-content: space-between;
+    // flex-wrap: wrap;
+    // gap: 5px;
     flex-direction: column;
+  }
+
+  &__title-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 5px;
   }
   &__title {
     font-family: "StretchSans";
     font-size: 24px;
     font-weight: 400;
+
+    // (ó﹏ò｡) бэм вышел из чата
+    button {
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+
+      color: black;
+      background-color: transparent;
+    }
+
+    &--turned-off {
+      opacity: 0.4;
+    }
   }
   &__subtitle {
     font-size: 16px;
@@ -53,6 +77,14 @@
       @media screen and (orientation: landscape) {
         height: 75%;
       }
+    }
+  }
+
+  &--mobile {
+    .languages-result__copy {
+      z-index: 2;
+      top: 77px;
+      right: 22px;
     }
   }
 }

@@ -14,12 +14,16 @@ type LanguagesListProps = {
 const LanguagesList: React.FC<LanguagesListProps> = ({ passedRef }) => {
   const languages = useAppSelector(state => state.present.languages);
   const { addLanguageToResult } = useAction();
+  const { setMobileOptions } = useAction();
 
   return (
     <>
       {isMobile && (
-        <div className='languages-result__header'>
+        <div className='languages-result__header languages-result__title-wrapper'>
           <h3 className='languages-result__title'>langs list</h3>
+          <h3 className='languages-result__title languages-result__title--turned-off'>
+            <button onClick={() => setMobileOptions({ currentScreenIndex: 1 })}>ur result</button>
+          </h3>
           {/* <span className='languages-result__subtitle'>might l00k fancy, but only here :&#40;</span> */}
         </div>
       )}
