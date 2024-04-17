@@ -12,6 +12,8 @@ import { useRandomWord, useSearchHotkeys } from "./hooks";
 import { useAction, useAppSelector } from "../../redux/hooks";
 import { createPortal } from "react-dom";
 
+// import { CSSTransition } from "react-transition-group";
+
 const SearchPopup = () => {
   const languages = useAppSelector(state => state.present.languages);
   // const search = useAppSelector(state => state.present.search);
@@ -240,7 +242,9 @@ const SearchPopup = () => {
 
 export const PopupListener: React.FC<{ active: boolean }> = ({ active }) => {
   if (!active) return null;
-  return createPortal(<SearchPopup />, document.body);
+  // <CSSTransition in={true} timeout={1200} classNames={"search-popup"}>
+  // </CSSTransition>
+  return <>{createPortal(<SearchPopup />, document.body)}</>;
 };
 
 export default SearchPopup;

@@ -8,6 +8,7 @@
     "next.js": "next.js",
     "mobx": "mobx",
     "vue": "vue",
+    "css": "css",
     "scss": "scss",
     "css-modules": "css-modules",
     "storybook": "storybook",

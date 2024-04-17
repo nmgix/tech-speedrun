@@ -60,6 +60,10 @@
     "backgroundColor": "#35495e",
     "iconLink": "/languages-icons/vue.svg"
   },
+  "css": {
+    "formattedTitle": "CSS",
+    "path": "frontend/css"
+  },
   "scss": {
     "formattedTitle": "SCSS",
     "path": "frontend/scss",
