@@ -98,7 +98,7 @@ const ButtonMemo: React.FC<{ copyCb: () => void; selectId: string }> = memo(
   ({ copyCb }) => {
     return (
       <button className='languages-result__copy' onClick={copyCb}>
-        <Icon src='/icons/copy.svg' iconColor='#D8D8D8' />
+        <Icon src={`${import.meta.env.BASE_URL}/icons/copy.svg`} iconColor='#D8D8D8' />
       </button>
     );
   },

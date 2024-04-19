@@ -14,7 +14,7 @@ export const IconTech: React.FC<IconTechProps> = ({ src, iconColor }) => {
   return src !== undefined ? (
     <Icon src={`${import.meta.env.BASE_URL}${src}`} iconColor={iconColor} />
   ) : (
-    <Icon src={`${import.meta.env.BASE_URL}languages-icons/fallback/fallback/${fallbackRef.current}.svg`} iconColor='#D9D9D9' />
+    <Icon src={`${import.meta.env.BASE_URL}languages-icons/fallback/fallback${fallbackRef.current}.svg`} iconColor='#D9D9D9' />
   );
 };
 IconTech.displayName = "IconTech";
