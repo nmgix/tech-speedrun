@@ -86,11 +86,18 @@ export default defineConfig(({ mode }) => {
               label: "Desktop layout"
             },
             {
-              src: "screenshots/mobile.png",
+              src: "screenshots/mobile1.jpg",
               sizes: "360x800",
-              type: "image/png",
+              type: "image/jpeg",
               form_factor: "narrow",
-              label: "Mobile layout"
+              label: "Mobile layout: langs list"
+            },
+            {
+              src: "screenshots/mobile2.jpg",
+              sizes: "360x800",
+              type: "image/jpeg",
+              form_factor: "narrow",
+              label: "Mobile layout: result"
             }
           ]
         }
