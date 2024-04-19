@@ -41,7 +41,7 @@ export default defineConfig(({ mode }) => {
           theme_color: "#FFFFFF",
           background_color: "#FFFFFF",
           display: "standalone",
-          start_url: "/",
+          start_url: "/tech-speedrun/",
           icons: [
             {
               src: "page-icons/icon-256.png",
