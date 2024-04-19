@@ -37,7 +37,7 @@ export default defineConfig(({ mode }) => {
         manifest: {
           name: "TECH SPREEDRUN",
           short_name: "TECH SPEEDRUN",
-          description: "Small app for making list of ypur tech stack for CV",
+          description: "Small app for making list of your tech stack for CV",
           theme_color: "#FFFFFF",
           background_color: "#FFFFFF",
           display: "standalone",
