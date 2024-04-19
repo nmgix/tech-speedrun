@@ -51,7 +51,7 @@ const SearchButton: React.FC<SearchButtonProps> = ({ input, predictionState, fie
     default: {
       return (
         <button className='search-popup__button search-popup__button--search' onClick={() => searchFunctions.search(input, closePopup, setFocusPath)}>
-          <img src={`${import.meta.env.BASE_URL}/icons/search-magnify.svg`} />
+          <img src={`${import.meta.env.BASE_URL}icons/search-magnify.svg`} />
         </button>
       );
     }
