@@ -94,15 +94,15 @@ const RealList: React.FC<{ currentLang: boolean }> = memo(
 );
 RealList.displayName = "RealList";
 
-const ButtonMemo: React.FC<{ copyCb: () => void; selectId: string }> = memo(
+const ButtonMemo: React.FC<{ copyCb: () => void; selectId: string; rerenderDep?: string | number | boolean }> = memo(
   ({ copyCb }) => {
     return (
       <button className='languages-result__copy' onClick={copyCb}>
-        <Icon src={`${import.meta.env.BASE_URL}/icons/copy.svg`} iconColor='#D8D8D8' />
+        <Icon src={`${import.meta.env.BASE_URL}icons/copy.svg`} iconColor='#D8D8D8' />
       </button>
     );
   },
-  (prev, next) => prev.selectId === next.selectId
+  (prev, next) => prev.selectId === next.selectId && prev.rerenderDep === next.rerenderDep
 );
 
 const LanguagesResult: React.FC<LanguagesResultProps> = ({ passedRef }) => {
@@ -138,8 +138,6 @@ const LanguagesResult: React.FC<LanguagesResultProps> = ({ passedRef }) => {
       return console.log("Нечего копировать!");
     }
     const text = `${resultListHeaderTranslates[options.switches.currentLangEN ? "en" : "ru"]}: \n` + formattedLangList;
-    // не работает на мобилке потому что
-    // https://stackoverflow.com/a/72679789/14889638
     navigator.clipboard.writeText(text);
     console.log("text copied");
   };
@@ -165,7 +163,7 @@ const LanguagesResult: React.FC<LanguagesResultProps> = ({ passedRef }) => {
           <h3 className='languages-result__title'>ur result</h3>
         )}
         <span className='languages-result__subtitle'>might l00k fancy, but only here :&#40;</span>
-        <ButtonMemo copyCb={copyText} selectId={languages.selectId} />
+        <ButtonMemo copyCb={copyText} selectId={languages.selectId} rerenderDep={options.switches.currentLangEN} />
       </div>
       <FocusWindow
         compareProp={[
