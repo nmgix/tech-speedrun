@@ -1,8 +1,7 @@
 ## Tech Speedrun
-
 Небольшое приложения для быстрого набора tech стака в текст
 
-Во-первых для личного использования, во вторых для отработки навыка обработки кнопок (возможно в будущем приложение на electron переедет), анимаций, бэм и пр.
+<img width="850" alt="app preview" src="./.git.content/app_preview.gif">
 
 Чтобы добавить свой язык надо: добавить язык в public.languages-characteristics.json (тип LanguageCharacteristic в помощь) -> добавить язык в категорию в public/languages.json -(опционально)-> добавить иконку в languages-icons
 
